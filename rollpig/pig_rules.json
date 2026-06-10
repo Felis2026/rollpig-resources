@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "food_pigs": [
+    "roasted-pig",
+    "bacon",
+    "mc_porkchop",
+    "pork-skewer",
+    "char-siu",
+    "pork-floss",
+    "suckling-pig",
+    "burger-pig",
+    "lard-pig",
+    "salmon-sushi-pig"
+  ],
+  "human_pigs": [
+    "human"
+  ],
+  "eaten_pigs": [
+    "eaten"
+  ],
+  "roast_excluded_pigs": []
+}

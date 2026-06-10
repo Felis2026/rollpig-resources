@@ -1,0 +1,706 @@
+{
+  "schema_version": 1,
+  "resource_version": "2026-06-05.2",
+  "min_plugin_version": "0.6.1",
+  "pig_json": {
+    "path": "pig.json",
+    "size": 32840,
+    "sha256": "ff4d35917c27496c5fbeda12745d169e8c965860afca61a717dbc8d8ff2c33d1"
+  },
+  "images": [
+    {
+      "id": "human",
+      "filename": "human.png",
+      "path": "images/human.png",
+      "size": 5318,
+      "sha256": "cb631983409c7f98b14470f1e1f17a508adae812361d2e536bf29199b5942d32"
+    },
+    {
+      "id": "pig",
+      "filename": "pig.png",
+      "path": "images/pig.png",
+      "size": 10494,
+      "sha256": "e22a426d88caeab56a0cb21e507dc74828143bc4f9bd35b26c56b686b5f37e4e"
+    },
+    {
+      "id": "black-pig",
+      "filename": "black-pig.png",
+      "path": "images/black-pig.png",
+      "size": 10722,
+      "sha256": "7f8913827fc0eccc6bf91934d5caf6c8428ef57f750a7c93e8c79ac7d5e09624"
+    },
+    {
+      "id": "wild-boar",
+      "filename": "wild-boar.png",
+      "path": "images/wild-boar.png",
+      "size": 13378,
+      "sha256": "75a06198b4b448556a858b67d7642c3638352b3361e688ae23bc0537e278c5b3"
+    },
+    {
+      "id": "zhuge-liang",
+      "filename": "zhuge-liang.png",
+      "path": "images/zhuge-liang.png",
+      "size": 49905,
+      "sha256": "caf17984d5330572481e2fafc20e5fe180ff684b6a5097886aba7288d45e8a8b"
+    },
+    {
+      "id": "pig-stamp",
+      "filename": "pig-stamp.png",
+      "path": "images/pig-stamp.png",
+      "size": 14028,
+      "sha256": "5e35c40975f7c9c5a10142e3c9ce3ab0a56862179e76c7427e126f9865f1bad7"
+    },
+    {
+      "id": "zombie-pig",
+      "filename": "zombie-pig.png",
+      "path": "images/zombie-pig.png",
+      "size": 20797,
+      "sha256": "7ca425a7f908df1f303255544fa53eae294c2e91f44e94fff9588d5560526dc3"
+    },
+    {
+      "id": "skeleton-pig",
+      "filename": "skeleton-pig.png",
+      "path": "images/skeleton-pig.png",
+      "size": 38607,
+      "sha256": "84028beafe56da0ca3b8729c88402280861395568c0660128f262ef60b4d75a7"
+    },
+    {
+      "id": "pig-human",
+      "filename": "pig-human.png",
+      "path": "images/pig-human.png",
+      "size": 13417,
+      "sha256": "c295b6bd86125a01360f486bfdda94effbb0bd6e5ecfdff27a8d40de29093af7"
+    },
+    {
+      "id": "demon-pig",
+      "filename": "demon-pig.png",
+      "path": "images/demon-pig.png",
+      "size": 12841,
+      "sha256": "7b050c93b2f0ced65a7f9d55ecad02d69b22625af895eeb22db52a3a8529a3e4"
+    },
+    {
+      "id": "heaven-pig",
+      "filename": "heaven-pig.png",
+      "path": "images/heaven-pig.png",
+      "size": 16832,
+      "sha256": "d38d3e6d1696a6a051368b35649b422b89dec7adf9dfc258234807f7dcd440b6"
+    },
+    {
+      "id": "explosive-pig",
+      "filename": "explosive-pig.png",
+      "path": "images/explosive-pig.png",
+      "size": 27206,
+      "sha256": "5d1337dc9c536d0d41ab0d9680d6cc73b2103d567139b4a4f220d7bdb66b79d1"
+    },
+    {
+      "id": "black-white-pig",
+      "filename": "black-white-pig.png",
+      "path": "images/black-white-pig.png",
+      "size": 19559,
+      "sha256": "149eab5a5d9c5e0778d3543dc5f510123b8fd86cf8134d5d53f3f29938f2d432"
+    },
+    {
+      "id": "pork-skewer",
+      "filename": "pork-skewer.png",
+      "path": "images/pork-skewer.png",
+      "size": 9122,
+      "sha256": "ce6ba946b38343756aaa5b172e20ec439556c8d82720ebea4cfed2dbfd088395"
+    },
+    {
+      "id": "magic-pig",
+      "filename": "magic-pig.png",
+      "path": "images/magic-pig.png",
+      "size": 45549,
+      "sha256": "40e03efcd622554fbdb450ef2f5f98acf9f2a0eb213b754330d9b99df95559c6"
+    },
+    {
+      "id": "mechanical-pig",
+      "filename": "mechanical-pig.png",
+      "path": "images/mechanical-pig.png",
+      "size": 27301,
+      "sha256": "7f2d1665e83e3f45c369094ac18a06799df1fb2549f7633c54a2ec86bf51d6a6"
+    },
+    {
+      "id": "pig-ball",
+      "filename": "pig-ball.png",
+      "path": "images/pig-ball.png",
+      "size": 17232,
+      "sha256": "d7b5dcf19c1c89ba5766e0d2995b2f2b59a491203401193b2f8a06115673b75e"
+    },
+    {
+      "id": "doll-pig",
+      "filename": "doll-pig.png",
+      "path": "images/doll-pig.png",
+      "size": 66837,
+      "sha256": "650dcfdad7a6c3394b5bbf210318508e73e22d9a9fbbde1b480d2c6d0fc203fd"
+    },
+    {
+      "id": "soul-pig",
+      "filename": "soul-pig.png",
+      "path": "images/soul-pig.png",
+      "size": 13984,
+      "sha256": "3e5029ee4fc39deb8ba6637bf4d1ea76c77f74cfe8f5b8e69d337b86dcd46831"
+    },
+    {
+      "id": "crystal-pig",
+      "filename": "crystal-pig.png",
+      "path": "images/crystal-pig.png",
+      "size": 69523,
+      "sha256": "32f0067db264ed8a671b560039b1e5756d7a2e4eda263e329b81bdd5bd679ef2"
+    },
+    {
+      "id": "snow-pig",
+      "filename": "snow-pig.png",
+      "path": "images/snow-pig.png",
+      "size": 18550,
+      "sha256": "218be8d6a514b0a0b924b19c1c470c5aba3238d3b52f85dc7f5e5e05e97e97dd"
+    },
+    {
+      "id": "pig-cat",
+      "filename": "pig-cat.png",
+      "path": "images/pig-cat.png",
+      "size": 34729,
+      "sha256": "e656a2f918b10926b32804bf8e22552da555990b5359e71ce5f2a077e580c118"
+    },
+    {
+      "id": "landmine-pig",
+      "filename": "landmine-pig.png",
+      "path": "images/landmine-pig.png",
+      "size": 66099,
+      "sha256": "503dce31d3cbbac8601361a5a083328a5badd103e85b7ba2f3f92899ce3157ed"
+    },
+    {
+      "id": "rainbow-pig",
+      "filename": "rainbow-pig.png",
+      "path": "images/rainbow-pig.png",
+      "size": 67432,
+      "sha256": "a0c82a5003725f0b388e9bc874281ee05d28d77744ccc900046327b0d3379a15"
+    },
+    {
+      "id": "big-lazy-pig",
+      "filename": "big-lazy-pig.png",
+      "path": "images/big-lazy-pig.png",
+      "size": 47839,
+      "sha256": "5c0d8b9f87ef74831fb94707bf40ab43e9e6234f5fbaac2286569c2a7b81479c"
+    },
+    {
+      "id": "pig-turtle",
+      "filename": "pig-turtle.png",
+      "path": "images/pig-turtle.png",
+      "size": 95055,
+      "sha256": "4b5e96a61836fd2e0799289fc78af72baa4d390afb003a6d6508c3ca62f6c1cf"
+    },
+    {
+      "id": "roasted-pig",
+      "filename": "roasted-pig.png",
+      "path": "images/roasted-pig.png",
+      "size": 39770,
+      "sha256": "2ac2151d9b258553f47b76a494ac37fb0fcb7c555d21c648fda15c83f540c6b1"
+    },
+    {
+      "id": "bacon",
+      "filename": "bacon.png",
+      "path": "images/bacon.png",
+      "size": 55722,
+      "sha256": "ec6f3afd6d7b0b5e2a0910ca086b91112e327e2748ac8333da0c4e6addc69e7f"
+    },
+    {
+      "id": "apple-pig",
+      "filename": "apple-pig.png",
+      "path": "images/apple-pig.png",
+      "size": 41533,
+      "sha256": "1d287c49182e0fae5964b9db9d382d36202aa8dcd92ae1628ed2880b74cb6435"
+    },
+    {
+      "id": "android-pig",
+      "filename": "android-pig.png",
+      "path": "images/android-pig.png",
+      "size": 37845,
+      "sha256": "5b0636aedb00047f186c30c8a100d1e967475bcaa94ad9bf945f1e5d9e0af937"
+    },
+    {
+      "id": "pig-bun",
+      "filename": "pig-bun.png",
+      "path": "images/pig-bun.png",
+      "size": 52591,
+      "sha256": "2999218a82763f1530bde62f1e1faa4efa02398573b95b6fede17e8e8465ab3c"
+    },
+    {
+      "id": "taxi-pig",
+      "filename": "taxi-pig.png",
+      "path": "images/taxi-pig.png",
+      "size": 54313,
+      "sha256": "77be64a8841b40aed4eb8495e282b09d73312930a09a17a8d7880fd649aeed98"
+    },
+    {
+      "id": "pig-die",
+      "filename": "pig-die.png",
+      "path": "images/pig-die.png",
+      "size": 57921,
+      "sha256": "e27a2c37fd39ba51e1395e2dd9cc62d4896ea7d182666b74268d3d94e0f3c81b"
+    },
+    {
+      "id": "watermelon-pig",
+      "filename": "watermelon-pig.png",
+      "path": "images/watermelon-pig.png",
+      "size": 1325162,
+      "sha256": "16ea1efacbc1ebad6097331e1dbb80f515c984a36f27c0e140bb807d96c6e917"
+    },
+    {
+      "id": "pig-souffle",
+      "filename": "pig-souffle.png",
+      "path": "images/pig-souffle.png",
+      "size": 53148,
+      "sha256": "59091ac0a3e2744ac035f59b81d31468f742aa4624a4c101d32467375019384f"
+    },
+    {
+      "id": "goblin-pig",
+      "filename": "goblin-pig.png",
+      "path": "images/goblin-pig.png",
+      "size": 59660,
+      "sha256": "89fd59becef43c8c432968615c00af842d620641124e0fdc2c25ef6b35df4177"
+    },
+    {
+      "id": "chained_crown_pig",
+      "filename": "chained_crown_pig.png",
+      "path": "images/chained_crown_pig.png",
+      "size": 70576,
+      "sha256": "3f3b21c672b6b071458fd1053ef993a6f99cb1694273419e8af56bfb47431b1a"
+    },
+    {
+      "id": "vangogh_pig",
+      "filename": "vangogh_pig.png",
+      "path": "images/vangogh_pig.png",
+      "size": 2578934,
+      "sha256": "b704507f05389c4ddfd1469c8f117350ae64a424390b305a4260586435cde927"
+    },
+    {
+      "id": "tangyuan_pig",
+      "filename": "tangyuan_pig.png",
+      "path": "images/tangyuan_pig.png",
+      "size": 1640768,
+      "sha256": "8a0bc937d82b8ff8410de29a9a915ae96253838563ae4cb1a54756ceae00a0d9"
+    },
+    {
+      "id": "mc_porkchop",
+      "filename": "mc_porkchop.png",
+      "path": "images/mc_porkchop.png",
+      "size": 35825,
+      "sha256": "33c1c5d37dabb3d6db1fedd33c1de0a3e582ad6c2d6dd67a41325a9ab3df6aa3"
+    },
+    {
+      "id": "pig_god",
+      "filename": "pig_god.png",
+      "path": "images/pig_god.png",
+      "size": 39122,
+      "sha256": "1dbd6351ea4a09cce495cc6792a8fa0bd05d62d3da79b52a30bc270e58f193f9"
+    },
+    {
+      "id": "tank_pig",
+      "filename": "tank_pig.png",
+      "path": "images/tank_pig.png",
+      "size": 52611,
+      "sha256": "b4a27b2e8c1ed73a377911f537b9e02883eb7ad18c5b9515ec46935666d46248"
+    },
+    {
+      "id": "lao_zhu_li",
+      "filename": "lao_zhu_li.png",
+      "path": "images/lao_zhu_li.png",
+      "size": 30435,
+      "sha256": "aaf42fc9dd6c782d7e0c321db43025737bcf57134608ba5c65ceaece686a6605"
+    },
+    {
+      "id": "invisible_pig",
+      "filename": "invisible_pig.png",
+      "path": "images/invisible_pig.png",
+      "size": 16190,
+      "sha256": "1a3cc0edf1993bb612fa752ab384ea621e438b762ea41fa61b3cd77f84348f8e"
+    },
+    {
+      "id": "buddha-pig",
+      "filename": "buddha-pig.png",
+      "path": "images/buddha-pig.png",
+      "size": 42130,
+      "sha256": "9bb4e808e96c2015925c2d622a5caf8d216b7a26bfdc4514768b2501ac4557c7"
+    },
+    {
+      "id": "leek-pig",
+      "filename": "leek-pig.png",
+      "path": "images/leek-pig.png",
+      "size": 46971,
+      "sha256": "a1e32d445d082ace930c93c8f61469ef8036591b697eaaecfc08a8dd262a4e63"
+    },
+    {
+      "id": "lemon-pig",
+      "filename": "lemon-pig.png",
+      "path": "images/lemon-pig.png",
+      "size": 52314,
+      "sha256": "543b61213130929a4957bede1db5f0382fb70dd36ae6e351f995820aa3316394"
+    },
+    {
+      "id": "frozen-pig",
+      "filename": "frozen-pig.png",
+      "path": "images/frozen-pig.png",
+      "size": 51778,
+      "sha256": "0b968f95609395d6e59ea10439db580f62ac95dd0dfc10b33a8c138cd00f528a"
+    },
+    {
+      "id": "taffy-pig",
+      "filename": "taffy-pig.png",
+      "path": "images/taffy-pig.png",
+      "size": 59711,
+      "sha256": "f53b69834568a83195fa574118e9af05d04d7b44f9c4c6913687bb4b34aba83f"
+    },
+    {
+      "id": "dirty-pig",
+      "filename": "dirty-pig.png",
+      "path": "images/dirty-pig.png",
+      "size": 73711,
+      "sha256": "2d2f4ccc4632780a4c4686c31b108a851c9465c505b99607d3c99ca7fea86b97"
+    },
+    {
+      "id": "cyberpunk-pig",
+      "filename": "cyberpunk-pig.png",
+      "path": "images/cyberpunk-pig.png",
+      "size": 2838967,
+      "sha256": "3e11d6e958d9d1aff869163e1d8777e1d8df441f9e2ea6ec991a3bc5a4f4fb0f"
+    },
+    {
+      "id": "teammate-pig",
+      "filename": "teammate-pig.png",
+      "path": "images/teammate-pig.png",
+      "size": 45975,
+      "sha256": "5611acbf37e6a7cd6dce9910016a3da0f826d72ea48483b16bcf4ab0484ffc09"
+    },
+    {
+      "id": "pearl-pig",
+      "filename": "pearl-pig.png",
+      "path": "images/pearl-pig.png",
+      "size": 80534,
+      "sha256": "93e1f0803864286e7d35bdb50b51eb096e97a9d8e8c636c3e9b8306700e7de03"
+    },
+    {
+      "id": "apple-of-eye-pig",
+      "filename": "apple-of-eye-pig.png",
+      "path": "images/apple-of-eye-pig.png",
+      "size": 45020,
+      "sha256": "9a878766dd3f0ef1dfc12528e10035a11bb7762eb542996d00e441afce051594"
+    },
+    {
+      "id": "spider-pig",
+      "filename": "spider-pig.png",
+      "path": "images/spider-pig.png",
+      "size": 50698,
+      "sha256": "470f5e1bc8f09b6a7a98fad3f127c1bfda284b499e2f1ff1c1f9f1b4daade6e1"
+    },
+    {
+      "id": "chocolate-pig",
+      "filename": "chocolate-pig.png",
+      "path": "images/chocolate-pig.png",
+      "size": 69780,
+      "sha256": "3d6a66c16abefbfbdf10c6e9aae3ffb730c873327b77f06cc40382e448c83d37"
+    },
+    {
+      "id": "protagonist-pig",
+      "filename": "protagonist-pig.png",
+      "path": "images/protagonist-pig.png",
+      "size": 72061,
+      "sha256": "fd836bc609339bf325e5b19d7c3380266759e6486cacd42c7e508cdcb720bbbf"
+    },
+    {
+      "id": "jewelry-pig",
+      "filename": "jewelry-pig.png",
+      "path": "images/jewelry-pig.png",
+      "size": 82711,
+      "sha256": "a92f147c23e029c04fcdefcf2d446c7cd34160abbd340ab456700f807da9ab90"
+    },
+    {
+      "id": "juliet-pig",
+      "filename": "juliet-pig.png",
+      "path": "images/juliet-pig.png",
+      "size": 69301,
+      "sha256": "91a86f145d0d31ef8093347f3fd88c999301164b89d9d2b1e60c40985c304cbb"
+    },
+    {
+      "id": "streamer-pig",
+      "filename": "streamer-pig.png",
+      "path": "images/streamer-pig.png",
+      "size": 45050,
+      "sha256": "5a4c233a824626325a4a5a0ee071a9c45fc692ec932011c53b9fe8904d7a34e5"
+    },
+    {
+      "id": "char-siu",
+      "filename": "char-siu.png",
+      "path": "images/char-siu.png",
+      "size": 67282,
+      "sha256": "0a8fbe6b04f6d29edd4cee3b6118944028dab01e67b1b9425be09b14fdd0e70d"
+    },
+    {
+      "id": "pork-floss",
+      "filename": "pork-floss.png",
+      "path": "images/pork-floss.png",
+      "size": 104469,
+      "sha256": "a241097faacc4c033e42d6adc2036cab43ed57278c2a4b03cc3dcea9bd353043"
+    },
+    {
+      "id": "piggy-bank",
+      "filename": "piggy-bank.png",
+      "path": "images/piggy-bank.png",
+      "size": 86897,
+      "sha256": "9c7da6ccff1f6ffbbc329fe7b918ddbbcc1b08788881aa6b19fa81b04662cc02"
+    },
+    {
+      "id": "suckling-pig",
+      "filename": "suckling-pig.png",
+      "path": "images/suckling-pig.png",
+      "size": 76849,
+      "sha256": "cda716026a9eaa3098d58081ce7c6917ba2b6ca3265f184800ea4e4d690c2562"
+    },
+    {
+      "id": "early-class-pig",
+      "filename": "early-class-pig.png",
+      "path": "images/early-class-pig.png",
+      "size": 59838,
+      "sha256": "48b78235559db32995d9bb8bd4dc25df9256a0f76f3cb3e63894827a0e66b5f6"
+    },
+    {
+      "id": "repeater-pig",
+      "filename": "repeater-pig.png",
+      "path": "images/repeater-pig.png",
+      "size": 39065,
+      "sha256": "af35356faf43645e6d4dfd94410db773311b870d271240660f702c7ac1a2e51f"
+    },
+    {
+      "id": "everest-pig",
+      "filename": "everest-pig.png",
+      "path": "images/everest-pig.png",
+      "size": 65789,
+      "sha256": "e80d9f005b51d07368270c8eaccd352794052e36be888d329fd3e4fc63bfec09"
+    },
+    {
+      "id": "burger-pig",
+      "filename": "burger-pig.png",
+      "path": "images/burger-pig.png",
+      "size": 63959,
+      "sha256": "c3b5964b974c8d4ef6939106b6fa2fa903a163113ccc2b61ec4ce1e835db75be"
+    },
+    {
+      "id": "chef-pig",
+      "filename": "chef-pig.png",
+      "path": "images/chef-pig.png",
+      "size": 53480,
+      "sha256": "8de3b27ccf8814873701471e39ccb857d269e3febc5af4978c04239cf5af5944"
+    },
+    {
+      "id": "coder-pig",
+      "filename": "coder-pig.png",
+      "path": "images/coder-pig.png",
+      "size": 66931,
+      "sha256": "3569f38e84fe438b02b4c473885e4204e57ab5fe4d45964d69cd36ec8e26becd"
+    },
+    {
+      "id": "error-404-pig",
+      "filename": "error-404-pig.png",
+      "path": "images/error-404-pig.png",
+      "size": 44984,
+      "sha256": "48dc3592c550a892dfb9d92a7e8f19e1c49d2382870f210ad6896dff441c4efc"
+    },
+    {
+      "id": "prison-break-pig",
+      "filename": "prison-break-pig.png",
+      "path": "images/prison-break-pig.png",
+      "size": 76381,
+      "sha256": "29101d6c173ec3e10045c3c41046b2ae24de565ad2a13ef5e0bfa1f626852659"
+    },
+    {
+      "id": "little-red-pig",
+      "filename": "little-red-pig.png",
+      "path": "images/little-red-pig.png",
+      "size": 25804,
+      "sha256": "287691e98718bb1b40ef78790caf4dd3ae0724b6443e450d1f8a31897d83a7fa"
+    },
+    {
+      "id": "pig-skin-milk",
+      "filename": "pig-skin-milk.png",
+      "path": "images/pig-skin-milk.png",
+      "size": 62238,
+      "sha256": "b4ea0c770b617a693c5afe06715ec94fccb7d5450acfe450f28049005765ace5"
+    },
+    {
+      "id": "homebody-pig",
+      "filename": "homebody-pig.png",
+      "path": "images/homebody-pig.png",
+      "size": 40533,
+      "sha256": "31cf8c77b37987b0467bd1c5054e453ecdccdb608e08e0800451d4110af99576"
+    },
+    {
+      "id": "lard-pig",
+      "filename": "lard-pig.png",
+      "path": "images/lard-pig.png",
+      "size": 61836,
+      "sha256": "eab082e1f4be909182c91fb06a60eced0e258f6bc656a0ccf35663d532abd95e"
+    },
+    {
+      "id": "eaten",
+      "filename": "eaten.png",
+      "path": "images/eaten.png",
+      "size": 59862,
+      "sha256": "14dc68f05235b0fba9353bb70d0ef0fd5c545028c818153d608cf71b41e2ea86"
+    },
+    {
+      "id": "arknights-pig",
+      "filename": "arknights-pig.png",
+      "path": "images/arknights-pig.png",
+      "size": 26269,
+      "sha256": "328461e62607235e44b6d747e00aeae41825263e46b0469870ee341b3aecfd21"
+    },
+    {
+      "id": "bandage-pig",
+      "filename": "bandage-pig.png",
+      "path": "images/bandage-pig.png",
+      "size": 58682,
+      "sha256": "15fa785a3655b2f87e32f3a9df38a6af5c5230b460d8a1e3649ef72068438987"
+    },
+    {
+      "id": "mini-pig",
+      "filename": "mini-pig.png",
+      "path": "images/mini-pig.png",
+      "size": 6726,
+      "sha256": "fb2eaa28bd0d00f3f039cca613614f2900adaaaff04327c86a68b679d95494b9"
+    },
+    {
+      "id": "oreo-pig",
+      "filename": "oreo-pig.png",
+      "path": "images/oreo-pig.png",
+      "size": 110176,
+      "sha256": "f53b355851a5ff93050ac2e31013eb6feca0e8ad79f9a33c5bc5adeb77a9f88a"
+    },
+    {
+      "id": "world-ruler-pig",
+      "filename": "world-ruler-pig.png",
+      "path": "images/world-ruler-pig.png",
+      "size": 59238,
+      "sha256": "ed71e8bdcf53d070761bc2d013f7559dc847115c1b794cde9df44e32ec64a1d0"
+    },
+    {
+      "id": "salmon-sushi-pig",
+      "filename": "salmon-sushi-pig.png",
+      "path": "images/salmon-sushi-pig.png",
+      "size": 77918,
+      "sha256": "bbc55bae03b6d80ae4cc5780d30e839e05e82b2a566410d7156669a76d5a9470"
+    },
+    {
+      "id": "bamboo-pig",
+      "filename": "bamboo-pig.png",
+      "path": "images/bamboo-pig.png",
+      "size": 40189,
+      "sha256": "3784c70d05cb3faf0b7009deb8756d2fcf23a508067514a27cd9ee35bd9ac306"
+    },
+    {
+      "id": "curator-pig",
+      "filename": "curator-pig.png",
+      "path": "images/curator-pig.png",
+      "size": 56177,
+      "sha256": "be851a56bd0622b47387f167fca38aee45e6773730d0f6fd378701bf7d2c5ac4"
+    },
+    {
+      "id": "upper-class-pig",
+      "filename": "upper-class-pig.png",
+      "path": "images/upper-class-pig.png",
+      "size": 57196,
+      "sha256": "920386b0df60bd2dd0b485674da2d3b209e277e9b1b94308cd52f8a4678f7c02"
+    },
+    {
+      "id": "stuck-pig",
+      "filename": "stuck-pig.png",
+      "path": "images/stuck-pig.png",
+      "size": 38750,
+      "sha256": "90249988d75abcb7d77e51694c3ee7162c705c5a1463854ab3e535691cd9a736"
+    },
+    {
+      "id": "alien-pig",
+      "filename": "alien-pig.png",
+      "path": "images/alien-pig.png",
+      "size": 26811,
+      "sha256": "d7a4759d120302d37d9a58da9ca420248762cce7edfae1756bd28f6758fc0030"
+    },
+    {
+      "id": "abstract-pig",
+      "filename": "abstract-pig.png",
+      "path": "images/abstract-pig.png",
+      "size": 38305,
+      "sha256": "d41404dba4533b2d202afab03bd5353203ac2ae3fc2fa4746fc9b0173ec46ee3"
+    },
+    {
+      "id": "tiramisu-pig",
+      "filename": "tiramisu-pig.png",
+      "path": "images/tiramisu-pig.png",
+      "size": 51534,
+      "sha256": "386e24cf13a8122f7d9df4ca89092f39e4d49b6e37ba100087ccb544deb83601"
+    },
+    {
+      "id": "computer-pig",
+      "filename": "computer-pig.png",
+      "path": "images/computer-pig.png",
+      "size": 66503,
+      "sha256": "eb46c0e0da1b384f68b048f5ea72fe853ec8e0ecdb10f521e611ba9e5c5dda6f"
+    },
+    {
+      "id": "clean-pig",
+      "filename": "clean-pig.png",
+      "path": "images/clean-pig.png",
+      "size": 50827,
+      "sha256": "49cbec4cc40cf76c44a53059e2999a0415565450d63d9731d9c652d255fd3dc9"
+    },
+    {
+      "id": "study-pig",
+      "filename": "study-pig.png",
+      "path": "images/study-pig.png",
+      "size": 53638,
+      "sha256": "2a110590aec268409e2ff3a1dfce425ac2449914f2be1310eab01a45d852b2d6"
+    },
+    {
+      "id": "antibacterial-pig",
+      "filename": "antibacterial-pig.png",
+      "path": "images/antibacterial-pig.png",
+      "size": 58296,
+      "sha256": "1dcdb042793304f0c63da7e96c9cfc08b9f650923fb75f54d5606c712f37cdf6"
+    },
+    {
+      "id": "pigskin-pig",
+      "filename": "pigskin-pig.png",
+      "path": "images/pigskin-pig.png",
+      "size": 52941,
+      "sha256": "69441e31fff3bd4a142711a6f1710173c7eda4f8b040417a322490838f1a8e51"
+    },
+    {
+      "id": "delivery-pig",
+      "filename": "delivery-pig.png",
+      "path": "images/delivery-pig.png",
+      "size": 33241,
+      "sha256": "a0696fb246b718d10ef77a9ec2ac55a65471ee024daab71412237ef6faa35be2"
+    },
+    {
+      "id": "muscle-pig",
+      "filename": "muscle-pig.png",
+      "path": "images/muscle-pig.png",
+      "size": 55328,
+      "sha256": "8d84236fb886ef2a2ec06636be4d41833efdc61c0392c43ced043086c3d63e5d"
+    },
+    {
+      "id": "pigsleep",
+      "filename": "pigsleep.png",
+      "path": "images/pigsleep.png",
+      "size": 52364,
+      "sha256": "6e037397c3a88d675313dc3962f9b8e3c8714ba5a5d94255406a3dd5d202ffc3"
+    }
+  ],
+  "optional_files": {
+    "pig_rules": {
+      "path": "pig_rules.json",
+      "size": 328,
+      "sha256": "f01ed2ea5d4b4dd8ba550540b40369b6974c159b00d3e6a8f6e2415b1a6c5e68"
+    }
+  },
+  "created_at": "2026-06-05T07:30:33.050431+00:00"
+}

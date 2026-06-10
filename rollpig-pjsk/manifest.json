@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "overlay": true,
+  "overlay_name": "rollpig-pjsk",
+  "resource_version": "pjsk-2026-06-10.0",
+  "base_manifest_url": "https://pig.felislab.cc/resources/rollpig/manifest.json",
+  "allow_override": false,
+  "pig_json": {
+    "path": "pig.json",
+    "size": 7,
+    "sha256": "50056c08ce479cc2f54c4d6595a4264bdf32bf84f2995d59ff3bd513897ab414"
+  },
+  "optional_files": {
+    "pig_rules": {
+      "path": "pig_rules.json",
+      "size": 95,
+      "sha256": "02de5f030f6af524c86281cefa7ecd4ac0f9b786a4f99c85e5574c97df1e9623"
+    },
+    "pig_overrides": {
+      "path": "pig_overrides.json",
+      "size": 7,
+      "sha256": "50056c08ce479cc2f54c4d6595a4264bdf32bf84f2995d59ff3bd513897ab414"
+    }
+  },
+  "images": []
+}

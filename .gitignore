@@ -1,0 +1,12 @@
+﻿# Python cache
+__pycache__/
+*.py[cod]
+
+# Temporary build output
+.dist/
+build/
+.tmp/
+
+# Local secrets
+.env
+*.token
