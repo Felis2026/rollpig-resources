@@ -1,6 +1,7 @@
-﻿{
+{
   "food_pigs": [],
   "human_pigs": [],
   "eaten_pigs": [],
-  "roast_excluded_pigs": []
+  "roast_excluded_pigs": [],
+  "sold_pigs": []
 }

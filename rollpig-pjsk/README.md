@@ -19,4 +19,4 @@
 如果私有包和公有包出现同 ID：
 
 - 默认不允许重复新增，防止误覆盖。
-- 如确实要覆盖，放入 `pig_overrides.json`，并在 manifest 标记 `allow_override=true`。
+- 如确实要覆盖，放入 `pig_overrides.json`；插件会按 ID 更新公有猪字段。

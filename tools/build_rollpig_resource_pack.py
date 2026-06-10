@@ -121,7 +121,7 @@ def main() -> None:
     manifest = {
         "schema_version": 1,
         "resource_version": version,
-        "min_plugin_version": "0.6.1",
+        "min_plugin_version": "0.2.0",
         "pig_json": {
             "path": "pig.json",
             "size": pig_json_path.stat().st_size,

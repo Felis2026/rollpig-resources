@@ -10,7 +10,11 @@
     "suckling-pig",
     "burger-pig",
     "lard-pig",
-    "salmon-sushi-pig"
+    "salmon-sushi-pig",
+    "dumpling-pig",
+    "hotdog-pig",
+    "shrimp-sushi-pig",
+    "strawberry-cake-pig"
   ],
   "human_pigs": [
     "human"
@@ -18,5 +22,8 @@
   "eaten_pigs": [
     "eaten"
   ],
-  "roast_excluded_pigs": []
+  "roast_excluded_pigs": [],
+  "sold_pigs": [
+    "sold-out"
+  ]
 }
