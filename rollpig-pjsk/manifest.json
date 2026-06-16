@@ -2,13 +2,13 @@
   "schema_version": 1,
   "overlay": true,
   "overlay_name": "rollpig-pjsk",
-  "resource_version": "pjsk-2026-06-10.1",
+  "resource_version": "pjsk-2026-06-15.1",
   "base_manifest_url": "https://pig.felislab.cc/resources/rollpig/manifest.json",
   "allow_override": false,
   "pig_json": {
     "path": "pig.json",
-    "size": 403,
-    "sha256": "c179c9c5d433d045c00ad63ae37270fc61d50a2171c800b8b5d95d43e7aed2b2"
+    "size": 1214,
+    "sha256": "737d3bdd161852c40072a804f0496da42ada82e0d7a13675df93cb037219d83c"
   },
   "optional_files": {
     "pig_rules": {
@@ -29,8 +29,22 @@
       "path": "images/mining-pig.png",
       "size": 77491,
       "sha256": "e02652e3f805c33e53ac8bb7cbbc17504a26201864b4f2bd66bd95488c397134"
+    },
+    {
+      "id": "ranking-pig",
+      "filename": "ranking-pig.png",
+      "path": "images/ranking-pig.png",
+      "size": 67587,
+      "sha256": "db3c1cff099ee12d68004706c0b1ff5c6ed79d2239bafe35e856d9178c72bd94"
+    },
+    {
+      "id": "attendance-pig",
+      "filename": "attendance-pig.png",
+      "path": "images/attendance-pig.png",
+      "size": 54797,
+      "sha256": "5eeed78f593a293d5b39f70758c6f2ca45800a39c4fc7027d9af1d0620b70f35"
     }
   ],
-  "created_at": "2026-06-10T14:20:24.309850+00:00",
+  "created_at": "2026-06-15T15:22:25.006995+00:00",
   "min_plugin_version": "0.6.2"
 }

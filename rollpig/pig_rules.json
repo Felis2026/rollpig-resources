@@ -14,7 +14,10 @@
     "dumpling-pig",
     "hotdog-pig",
     "shrimp-sushi-pig",
-    "strawberry-cake-pig"
+    "strawberry-cake-pig",
+    "canned-pig",
+    "sushi-platter-pig",
+    "tamagoyaki-pig"
   ],
   "human_pigs": [
     "human"
