@@ -1,0 +1,57 @@
+name: 🐷 提交新小猪 (Submit a New Pig)
+description: 提交你自己绘制或获得授权的小猪素材
+title: "[Pig] 你的小猪名称"
+labels: ["enhancement", "new-pig"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢你为 RollPig 贡献新的小猪！在提交前，请确保你已经阅读了 `README.md` 中的贡献指南。
+        注意：图片必须为 .png 格式且为透明背景！
+  - type: input
+    id: pig_id
+    attributes:
+      label: 小猪 ID
+      description: 填入 `pig.json` 中分配的 ID（英文/数字/下划线）
+      placeholder: "例如: sleep_pig"
+    validations:
+      required: true
+  - type: input
+    id: pig_name
+    attributes:
+      label: 小猪名称
+      placeholder: "例如: 睡眠猪"
+    validations:
+      required: true
+  - type: textarea
+    id: pig_desc
+    attributes:
+      label: 小猪描述与解析 (Description & Analysis)
+      description: 也可以直接把准备好的 `pig.json` 片段粘贴在这里
+      placeholder: |
+        "description": "喜欢睡觉的小猪"
+        "analysis": "你最近可能有点缺觉..."
+    validations:
+      required: true
+  - type: dropdown
+    id: source
+    attributes:
+      label: 来源声明
+      description: 请确认这个小猪图文的来源
+      options:
+        - 纯原创 (完全由我绘制和编写)
+        - 授权搬运 (已获得原作者同意，并在下方提供说明)
+        - 社区图片 + 原创文案
+    validations:
+      required: true
+  - type: checkboxes
+    id: checklists
+    attributes:
+      label: 提交前检查单
+      options:
+        - label: 图片是 `.png` 格式
+          required: true
+        - label: 图片是**透明背景**
+          required: true
+        - label: 图片尺寸符合要求 (例如 240x240 等)
+          required: true

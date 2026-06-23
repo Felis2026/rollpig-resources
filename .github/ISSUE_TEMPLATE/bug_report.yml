@@ -1,0 +1,26 @@
+name: 🐛 问题反馈 / 版权申诉 (Bug Report / Copyright)
+description: 发现错别字、图片缺失、或存在版权/授权问题
+title: "[Bug] 简单描述问题"
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        如果你发现某只小猪资源存在问题（如：图片和描述不匹配、错别字），或者认为某个资源存在版权争议，请在此反馈。
+  - type: dropdown
+    id: issue_type
+    attributes:
+      label: 问题类型
+      options:
+        - 资源错误 (图片缺失、描述写错等)
+        - 版权申诉 / 来源错漏
+        - 其他问题
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: 问题详情
+      description: 请详细描述问题，如果是资源错误请提供对应的小猪 ID。
+    validations:
+      required: true
