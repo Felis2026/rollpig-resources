@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "resource_version": "2026-06-15.2",
+  "resource_version": "2026-06-26.1",
   "min_plugin_version": "0.2.0",
   "pig_json": {
     "path": "pig.json",
-    "size": 47547,
-    "sha256": "5564f3197144040e9811ca08afd3b32f74175ae94ff8a09b46d186da97da7479"
+    "size": 53059,
+    "sha256": "e75f3a9ff6e32d625b21b579f69be2a538a48f347cabb7f1fe512ba199ba64d9"
   },
   "images": [
     {
@@ -33,8 +33,8 @@
       "id": "wild-boar",
       "filename": "wild-boar.png",
       "path": "images/wild-boar.png",
-      "size": 13378,
-      "sha256": "75a06198b4b448556a858b67d7642c3638352b3361e688ae23bc0537e278c5b3"
+      "size": 60102,
+      "sha256": "93cbb1b651ab9b3575552671e3e4ecf96b87edd24b3d1a8df3171f8a36da70e3"
     },
     {
       "id": "zhuge-liang",
@@ -959,14 +959,105 @@
       "path": "images/carrot-ghost-pig.png",
       "size": 30180,
       "sha256": "1d608ccfceea20e245e6fdb17dae95ad6cd6b321f625ca89b20c341c55672c80"
+    },
+    {
+      "id": "jurassic-pig",
+      "filename": "jurassic-pig.png",
+      "path": "images/jurassic-pig.png",
+      "size": 53737,
+      "sha256": "edf0ff240b1d9153614ae48b73a71e739ee9fb63ddc5993a08d62cc0d3677154"
+    },
+    {
+      "id": "stressed-pig",
+      "filename": "stressed-pig.png",
+      "path": "images/stressed-pig.png",
+      "size": 72836,
+      "sha256": "136b061ff5322442d9909295c40aa0fd2a2874c4e9af5153ae273794e049b97d"
+    },
+    {
+      "id": "astro-pig",
+      "filename": "astro-pig.png",
+      "path": "images/astro-pig.png",
+      "size": 76119,
+      "sha256": "3748a83e064dd1804e631cc846708a2a587336b75761d668ef620f2b2ca55688"
+    },
+    {
+      "id": "ninja-pig",
+      "filename": "ninja-pig.png",
+      "path": "images/ninja-pig.png",
+      "size": 40653,
+      "sha256": "3500ceecf18d48bc950d43a899e3dbf58b7578ea7e2d4d1ddc56e3f4727bf720"
+    },
+    {
+      "id": "dumb-pig",
+      "filename": "dumb-pig.png",
+      "path": "images/dumb-pig.png",
+      "size": 68639,
+      "sha256": "d8d4a6b1c8c546dffa9c10cf28b60371b9344c3e96691ae8f26bcf1eecd0b236"
+    },
+    {
+      "id": "big-stomach-pig",
+      "filename": "big-stomach-pig.png",
+      "path": "images/big-stomach-pig.png",
+      "size": 35208,
+      "sha256": "69f471300cf7bff3a94506b51416a46ceeb1c1533e3d24a019f548336031f00d"
+    },
+    {
+      "id": "elephant-pig",
+      "filename": "elephant-pig.png",
+      "path": "images/elephant-pig.png",
+      "size": 32308,
+      "sha256": "26564131959a44511d4589ecfa0000d973a5e85dfca7076106fdf04c7ff25395"
+    },
+    {
+      "id": "ai-pig",
+      "filename": "ai-pig.png",
+      "path": "images/ai-pig.png",
+      "size": 75006,
+      "sha256": "c43ddd52b5ebf380f370998078e13359e452e6e9b6075435b7ac3300f6a3eab2"
+    },
+    {
+      "id": "doctor-pig",
+      "filename": "doctor-pig.png",
+      "path": "images/doctor-pig.png",
+      "size": 62687,
+      "sha256": "5eea5a873f867967e527f663528f93d1d05c4b9b1093f8893832534225234c67"
+    },
+    {
+      "id": "melting-pig",
+      "filename": "melting-pig.png",
+      "path": "images/melting-pig.png",
+      "size": 66454,
+      "sha256": "9803c85a6a9ef037247fdaf156e9176994ed74c97b76332a8fad7730e42b6781"
+    },
+    {
+      "id": "bone-soup-pig",
+      "filename": "bone-soup-pig.png",
+      "path": "images/bone-soup-pig.png",
+      "size": 74667,
+      "sha256": "ad6f70679bc15cf373b1959cb28384614872e6bb5cf0439340b1884a474c6bb5"
+    },
+    {
+      "id": "palico-pig",
+      "filename": "palico-pig.png",
+      "path": "images/palico-pig.png",
+      "size": 65753,
+      "sha256": "ccc8dfc58d69e2bbbc74e665a67b34251c320322d1f360ed88762379a95d58f0"
+    },
+    {
+      "id": "drunk-pig",
+      "filename": "drunk-pig.png",
+      "path": "images/drunk-pig.png",
+      "size": 60447,
+      "sha256": "a60e6788668bb8e32118856513057fb18acdcb92f39ae6911aeaef7493553e35"
     }
   ],
   "optional_files": {
     "pig_rules": {
       "path": "pig_rules.json",
-      "size": 551,
-      "sha256": "560b0f42826398b3ff37048b58efc233ceb9ae3700e5c68ccbb92cfaa2090ce8"
+      "size": 573,
+      "sha256": "fe25addb9e9140a277a42787fdc29a7b98f18d0c861475a21a7eba2e1bf05420"
     }
   },
-  "created_at": "2026-06-16T02:00:46.042303+00:00"
+  "created_at": "2026-06-26T04:27:24.325754+00:00"
 }
