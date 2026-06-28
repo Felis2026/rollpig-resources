@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "resource_version": "2026-06-26.1",
+  "resource_version": "2026-06-28.1",
   "min_plugin_version": "0.2.0",
   "pig_json": {
     "path": "pig.json",
-    "size": 53059,
-    "sha256": "e75f3a9ff6e32d625b21b579f69be2a538a48f347cabb7f1fe512ba199ba64d9"
+    "size": 59740,
+    "sha256": "e14eda8f1f23c7c4c543318b0343b7225a5ea9f0738bce1d4e7729840c6ff8bf"
   },
   "images": [
     {
@@ -1050,14 +1050,126 @@
       "path": "images/drunk-pig.png",
       "size": 60447,
       "sha256": "a60e6788668bb8e32118856513057fb18acdcb92f39ae6911aeaef7493553e35"
+    },
+    {
+      "id": "slippery-pig",
+      "filename": "slippery-pig.png",
+      "path": "images/slippery-pig.png",
+      "size": 67363,
+      "sha256": "6bcad9b14794181430b497359c6abedb9d0b34f11effd0469042b9004865658f"
+    },
+    {
+      "id": "nurse-pig",
+      "filename": "nurse-pig.png",
+      "path": "images/nurse-pig.png",
+      "size": 54822,
+      "sha256": "45bfb598510d99d0d4b3f43bb361390ca72e722430c9343f8f0a5f954c1d6d7d"
+    },
+    {
+      "id": "twitch-pig",
+      "filename": "twitch-pig.png",
+      "path": "images/twitch-pig.png",
+      "size": 40939,
+      "sha256": "ddf3aabad58a5c3ebd83134d246fe70c5cd9769cce587d70e9878244d3bb53c1"
+    },
+    {
+      "id": "oil-painting-pig",
+      "filename": "oil-painting-pig.png",
+      "path": "images/oil-painting-pig.png",
+      "size": 92147,
+      "sha256": "a5c4e0bd121b93995961e45d13b41002d2131f01c4c23e5d3b6cbca2c3a5d29c"
+    },
+    {
+      "id": "lion-pig",
+      "filename": "lion-pig.png",
+      "path": "images/lion-pig.png",
+      "size": 61429,
+      "sha256": "688e65ab92f812b94789dacc3ffff53127e69053f1d3b8106b7f36b634f827ab"
+    },
+    {
+      "id": "gym-pig",
+      "filename": "gym-pig.png",
+      "path": "images/gym-pig.png",
+      "size": 50562,
+      "sha256": "16c35e1e0d11b1f0474f63a90e9ff461a4a8164c19107c8ba72e1e7a07355fb6"
+    },
+    {
+      "id": "pig-rabbit-cage",
+      "filename": "pig-rabbit-cage.png",
+      "path": "images/pig-rabbit-cage.png",
+      "size": 48855,
+      "sha256": "73473e2efc5b57ce72d9328991ecabf545fac071d0ce2f92f3ee54536af48b56"
+    },
+    {
+      "id": "rolling-pig",
+      "filename": "rolling-pig.png",
+      "path": "images/rolling-pig.png",
+      "size": 58741,
+      "sha256": "8f78168cbd562be157f37602eb99b8bd83de35bb8eade6ce8f13b51e17f70737"
+    },
+    {
+      "id": "chat-spam-pig",
+      "filename": "chat-spam-pig.png",
+      "path": "images/chat-spam-pig.png",
+      "size": 48784,
+      "sha256": "475603088f1fdacf9a1054f738e7c93751a46ad16affa630b1ae533ff4307787"
+    },
+    {
+      "id": "lucky-mud-pig",
+      "filename": "lucky-mud-pig.png",
+      "path": "images/lucky-mud-pig.png",
+      "size": 86952,
+      "sha256": "5953c3c4fae42800ec6dcb961a75af9deea48249bb40396e040fd96f8f4cf0d8"
+    },
+    {
+      "id": "christmas-pig",
+      "filename": "christmas-pig.png",
+      "path": "images/christmas-pig.png",
+      "size": 98458,
+      "sha256": "86995356bc623c3a6584b3509e21aa1f23f30d71fac762ff72b2ffd0020a2016"
+    },
+    {
+      "id": "duke-pig",
+      "filename": "duke-pig.png",
+      "path": "images/duke-pig.png",
+      "size": 46148,
+      "sha256": "5cf9d1038396b73efead41b24d75e2613d5e2daf1c05d90cf5735a54d4b8d9cb"
+    },
+    {
+      "id": "fat-pig",
+      "filename": "fat-pig.png",
+      "path": "images/fat-pig.png",
+      "size": 30696,
+      "sha256": "7aca4deaea38501d894941f88a01bee1e3d226109aaae6fc79def83922a251cb"
+    },
+    {
+      "id": "shocking-delicious",
+      "filename": "shocking-delicious.png",
+      "path": "images/shocking-delicious.png",
+      "size": 68854,
+      "sha256": "97ba18f57380ca874cb6b8d4caacb47e62c6ac2aed2b3cd609dc07a861331921"
+    },
+    {
+      "id": "ufo-pig",
+      "filename": "ufo-pig.png",
+      "path": "images/ufo-pig.png",
+      "size": 49586,
+      "sha256": "9de75235983d6e6f945386f962cc718027e7da6e1c9ce19886ad5434c68c47e9"
+    },
+    {
+      "id": "yiwei-pig",
+      "filename": "yiwei-pig.png",
+      "path": "images/yiwei-pig.png",
+      "size": 96634,
+      "sha256": "4c63e73a965794ad6cd181302583b33832af6efa81a2d17fe0564c2cafbcf7d2"
     }
   ],
   "optional_files": {
     "pig_rules": {
       "path": "pig_rules.json",
-      "size": 573,
-      "sha256": "fe25addb9e9140a277a42787fdc29a7b98f18d0c861475a21a7eba2e1bf05420"
+      "size": 591,
+      "sha256": "ad1ba0e6256ae54cdd5d2e6017c8e1323e42e1ba0b912d46fe8da94853804393"
     }
   },
-  "created_at": "2026-06-26T04:27:24.325754+00:00"
+  "created_at": "2026-06-28T14:57:09.373960+00:00"
 }

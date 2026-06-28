@@ -2,13 +2,13 @@
   "schema_version": 1,
   "overlay": true,
   "overlay_name": "rollpig-pjsk",
-  "resource_version": "pjsk-2026-06-15.1",
+  "resource_version": "pjsk-2026-06-28.1",
   "base_manifest_url": "https://pig.felislab.cc/resources/rollpig/manifest.json",
   "allow_override": false,
   "pig_json": {
     "path": "pig.json",
-    "size": 1214,
-    "sha256": "737d3bdd161852c40072a804f0496da42ada82e0d7a13675df93cb037219d83c"
+    "size": 1602,
+    "sha256": "c25b43023165f77554f464b0ddc3780c5c73327f05ca02a4004f30cc91592cca"
   },
   "optional_files": {
     "pig_rules": {
@@ -43,8 +43,15 @@
       "path": "images/attendance-pig.png",
       "size": 54797,
       "sha256": "5eeed78f593a293d5b39f70758c6f2ca45800a39c4fc7027d9af1d0620b70f35"
+    },
+    {
+      "id": "chunithm-pig",
+      "filename": "chunithm-pig.png",
+      "path": "images/chunithm-pig.png",
+      "size": 88062,
+      "sha256": "d0dfc542f469ecd33b70cc7f3908fc92de2881e2aa9a36273e7c07ba6cecfabe"
     }
   ],
-  "created_at": "2026-06-15T15:22:25.006995+00:00",
+  "created_at": "2026-06-28T14:57:09.376902+00:00",
   "min_plugin_version": "0.6.2"
 }
