@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "resource_version": "2026-06-28.1",
+  "resource_version": "2026-07-09.1",
   "min_plugin_version": "0.2.0",
   "pig_json": {
     "path": "pig.json",
-    "size": 59740,
-    "sha256": "e14eda8f1f23c7c4c543318b0343b7225a5ea9f0738bce1d4e7729840c6ff8bf"
+    "size": 63319,
+    "sha256": "f81e3b701301bcc3e2c49ef43aeaa7929a0378c399e88a1a73fb257234f0489b"
   },
   "images": [
     {
@@ -243,8 +243,8 @@
       "id": "watermelon-pig",
       "filename": "watermelon-pig.png",
       "path": "images/watermelon-pig.png",
-      "size": 1325162,
-      "sha256": "16ea1efacbc1ebad6097331e1dbb80f515c984a36f27c0e140bb807d96c6e917"
+      "size": 50821,
+      "sha256": "bc93d06f50720ea759092e370be8bc4961b7fa57d10311f1dffa99dfcef4e794"
     },
     {
       "id": "pig-souffle",
@@ -271,15 +271,15 @@
       "id": "vangogh_pig",
       "filename": "vangogh_pig.png",
       "path": "images/vangogh_pig.png",
-      "size": 2578934,
-      "sha256": "b704507f05389c4ddfd1469c8f117350ae64a424390b305a4260586435cde927"
+      "size": 129897,
+      "sha256": "14771c59fa032141774a98c119e85598394ec557e67893a68cf70abb910b3ffd"
     },
     {
       "id": "tangyuan_pig",
       "filename": "tangyuan_pig.png",
       "path": "images/tangyuan_pig.png",
-      "size": 1640768,
-      "sha256": "8a0bc937d82b8ff8410de29a9a915ae96253838563ae4cb1a54756ceae00a0d9"
+      "size": 82609,
+      "sha256": "a9df8788283d7bc34deb145dca6451731144193ca76280123bf11b3144642194"
     },
     {
       "id": "mc_porkchop",
@@ -362,8 +362,8 @@
       "id": "cyberpunk-pig",
       "filename": "cyberpunk-pig.png",
       "path": "images/cyberpunk-pig.png",
-      "size": 2838967,
-      "sha256": "3e11d6e958d9d1aff869163e1d8777e1d8df441f9e2ea6ec991a3bc5a4f4fb0f"
+      "size": 86871,
+      "sha256": "8ac579bbdf4129d8600c9179efdb1cf79fe07589c640ae375bfdb01dbd84f6a9"
     },
     {
       "id": "teammate-pig",
@@ -1162,14 +1162,84 @@
       "path": "images/yiwei-pig.png",
       "size": 96634,
       "sha256": "4c63e73a965794ad6cd181302583b33832af6efa81a2d17fe0564c2cafbcf7d2"
+    },
+    {
+      "id": "ground-impact-pig",
+      "filename": "ground-impact-pig.png",
+      "path": "images/ground-impact-pig.png",
+      "size": 60209,
+      "sha256": "9965f5c1b4245bd698499d1ef74897c9b1fab9edbabc008b1d7be84297bfee63"
+    },
+    {
+      "id": "police-pig",
+      "filename": "police-pig.png",
+      "path": "images/police-pig.png",
+      "size": 62411,
+      "sha256": "8a7b61e8684343004a9647420f095bcf121b5be4364bd21f73a2134c6a06afb8"
+    },
+    {
+      "id": "noob-pig",
+      "filename": "noob-pig.png",
+      "path": "images/noob-pig.png",
+      "size": 37167,
+      "sha256": "395fb647d56754469685da329ea31056e6eff127108f26a712be0a4d55829d70"
+    },
+    {
+      "id": "soup-pig",
+      "filename": "soup-pig.png",
+      "path": "images/soup-pig.png",
+      "size": 48561,
+      "sha256": "796c92ab7f93ec70d974049c9c5c94fdaf43bbd237ef162d7f00d6696736dd55"
+    },
+    {
+      "id": "katsu-rice-pig",
+      "filename": "katsu-rice-pig.png",
+      "path": "images/katsu-rice-pig.png",
+      "size": 87891,
+      "sha256": "bb67878b5b4aedc5c7b6e06276823764991339510ce7da97db3e638bceea3e5c"
+    },
+    {
+      "id": "jelly-pig",
+      "filename": "jelly-pig.png",
+      "path": "images/jelly-pig.png",
+      "size": 58740,
+      "sha256": "951e843e3fc427e4226ec46b1f6f7fce88187ec65f9e13e2f902759684182b1d"
+    },
+    {
+      "id": "room-check-pig",
+      "filename": "room-check-pig.png",
+      "path": "images/room-check-pig.png",
+      "size": 46244,
+      "sha256": "572acea5c19e0d5fac333694298aad26bef399b46fed3593982cfe3b6a155cf3"
+    },
+    {
+      "id": "flu-pig",
+      "filename": "flu-pig.png",
+      "path": "images/flu-pig.png",
+      "size": 34610,
+      "sha256": "2b2c92a23e94ca3078ae9947c019b28a84d5da199e720a90002dd9bf83f82982"
+    },
+    {
+      "id": "cart-pig",
+      "filename": "cart-pig.png",
+      "path": "images/cart-pig.png",
+      "size": 55800,
+      "sha256": "0c1f4fd99daeaa9dd264645f23236849b05f63e3ef7d3e335102c066b28cb914"
+    },
+    {
+      "id": "pig-rice",
+      "filename": "pig-rice.png",
+      "path": "images/pig-rice.png",
+      "size": 74517,
+      "sha256": "b05e850a937eaefbf4f7b6137d96bbd9abe6df095bc9e88440c21219c88c8383"
     }
   ],
   "optional_files": {
     "pig_rules": {
       "path": "pig_rules.json",
-      "size": 591,
-      "sha256": "ad1ba0e6256ae54cdd5d2e6017c8e1323e42e1ba0b912d46fe8da94853804393"
+      "size": 614,
+      "sha256": "70b91b3d97c70f6af6596ab8f43ad20c458da5ce84b4157c848218088ebd6f8e"
     }
   },
-  "created_at": "2026-06-28T14:57:09.373960+00:00"
+  "created_at": "2026-07-09T12:35:33.276220+00:00"
 }
