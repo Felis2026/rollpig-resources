@@ -25,6 +25,7 @@ rollpig-resources/
 │  ├─ pig_overrides.json
 │  ├─ pig_rules.json
 │  └─ images/
+├─ docs/                     # 自建私有包、资源维护等说明文档
 └─ tools/                    # 构建与清单更新脚本
 ```
 
@@ -129,14 +130,27 @@ GIF 动态小猪外挂包：
 https://pig.felislab.cc/resources/rollpig-gif/manifest.json
 ```
 
-插件配置示例：
+RollPig Plus `0.8.2+` 推荐配置示例：
 
-```env
-ROLLPIG_RESOURCE_MANIFEST_URL=https://pig.felislab.cc/resources/rollpig/manifest.json
-ROLLPIG_PRIVATE_RESOURCE_MANIFEST_URL=https://pig.felislab.cc/resources/rollpig-pjsk/manifest.json
+```json
+{
+  "rollpig": {
+    "rollpig_resource_manifest_url": "https://pig.felislab.cc/resources/rollpig/manifest.json",
+    "rollpig_private_resource_manifests": [
+      {
+        "name": "pjsk",
+        "manifest_url": "https://pig.felislab.cc/resources/rollpig-pjsk/manifest.json"
+      }
+    ]
+  }
+}
 ```
 
+`rollpig-gif` 是 RollPig Plus `0.8.2+` 内部固定使用的官方动态小猪包，Plus 用户不需要在配置里手动填写。
+
 当前静态资源包不需要私有 token；`ROLLPIG_PRIVATE_RESOURCE_TOKEN` 仅在自建带鉴权的资源服务时才需要。
+
+如果你想维护自己的本地私有小猪包，请参考 [自建本地私有包指南](docs/local-private-pack-guide.md)。
 
 ## 如何贡献 (Contributing)
 
