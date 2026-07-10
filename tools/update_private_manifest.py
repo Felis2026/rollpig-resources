@@ -7,6 +7,8 @@ import json
 from pathlib import Path
 from typing import Any
 
+IMAGE_SUFFIX_PRIORITY = (".gif", ".png")
+
 
 def sha256_file(path: Path) -> str:
     digest = hashlib.sha256()
@@ -40,6 +42,11 @@ def main() -> None:
         default="",
         help="resource version; default keeps existing manifest version",
     )
+    parser.add_argument(
+        "--min-plugin-version",
+        default="",
+        help="minimum RollPig Plus version required by this overlay",
+    )
     args = parser.parse_args()
 
     repo_root = Path(__file__).resolve().parents[1]
@@ -61,6 +68,7 @@ def main() -> None:
     resource_version = args.version or str(manifest.get("resource_version") or "")
     if not resource_version:
         resource_version = "pjsk-" + dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d.%H%M%S")
+    min_plugin_version = args.min_plugin_version or str(manifest.get("min_plugin_version") or "0.6.2")
 
     manifest.update(
         {
@@ -68,7 +76,7 @@ def main() -> None:
             "overlay": True,
             "overlay_name": manifest.get("overlay_name") or pack_dir.name,
             "resource_version": resource_version,
-            "min_plugin_version": "0.6.2",
+            "min_plugin_version": min_plugin_version,
             "base_manifest_url": manifest.get("base_manifest_url")
             or "https://pig.felislab.cc/resources/rollpig/manifest.json",
             "allow_override": bool(manifest.get("allow_override", False)),
@@ -86,14 +94,18 @@ def main() -> None:
     manifest["optional_files"] = optional_files
 
     # ================================ 图片清单 ================================ #
+    # 私有包允许提供 GIF 动态资源；manifest 必须记录实际文件名，
+    # 让客户端按 filename 下载，而不是默认假设所有图片都是 PNG。
     image_items: list[dict[str, object]] = []
     for pig in pigs:
         if not isinstance(pig, dict):
             raise ValueError("pig.json contains invalid item")
         pig_id = str(pig.get("id") or "")
-        image_path = images_dir / f"{pig_id}.png"
-        if not image_path.exists():
-            raise FileNotFoundError(f"missing private image: {image_path}")
+        image_candidates = [images_dir / f"{pig_id}{suffix}" for suffix in IMAGE_SUFFIX_PRIORITY]
+        image_path = next((candidate for candidate in image_candidates if candidate.exists()), None)
+        if image_path is None:
+            expected = ", ".join(f"{pig_id}{suffix}" for suffix in IMAGE_SUFFIX_PRIORITY)
+            raise FileNotFoundError(f"missing private image: {images_dir} ({expected})")
         image_items.append(
             {
                 "id": pig_id,

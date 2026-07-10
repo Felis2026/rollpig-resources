@@ -13,10 +13,16 @@ rollpig-resources/
 │  ├─ pig.json               # 小猪基础数据
 │  ├─ pig_rules.json         # 可选规则元数据
 │  └─ images/                # 小猪图片，文件名与 pig id 对应
-├─ rollpig-pjsk/             # Felis / PJSK Bot 专用外挂包
+├─ rollpig-pjsk/             # PJSK Bot 专用外挂包
 │  ├─ manifest.json
 │  ├─ pig.json               # 只放外挂包新增小猪
 │  ├─ pig_overrides.json     # 可选，覆盖公有小猪字段
+│  ├─ pig_rules.json
+│  └─ images/
+├─ rollpig-gif/              # GIF 动态小猪外挂包
+│  ├─ manifest.json
+│  ├─ pig.json
+│  ├─ pig_overrides.json
 │  ├─ pig_rules.json
 │  └─ images/
 └─ tools/                    # 构建与清单更新脚本
@@ -46,6 +52,16 @@ rollpig-resources/
 - `pig_overrides.json` 用于按 `id` 覆盖公有小猪字段。
 - `pig_rules.json` 与公有规则做并集。
 - 图片查找顺序为：外挂包图片 → 公有包图片 → 插件内置图片。
+
+### GIF 动态小猪外挂包：`rollpig-gif/`
+
+`rollpig-gif/` 是专门存放 GIF 动态小猪的 overlay 包，只追加普通小猪，不覆盖公有包字段，也不写入熟食等特殊规则。
+
+GIF 包约定：
+
+- `pig.json` 只放 GIF 包新增小猪。
+- 图片文件使用 `.gif`，文件名与 `id` 对应。
+- 需要配合支持 GIF 资源的 RollPig Plus 版本使用。
 
 ## 文件格式
 
@@ -107,6 +123,12 @@ Bot 专用外挂包：
 https://pig.felislab.cc/resources/rollpig-pjsk/manifest.json
 ```
 
+GIF 动态小猪外挂包：
+
+```text
+https://pig.felislab.cc/resources/rollpig-gif/manifest.json
+```
+
 插件配置示例：
 
 ```env
@@ -116,31 +138,6 @@ ROLLPIG_PRIVATE_RESOURCE_MANIFEST_URL=https://pig.felislab.cc/resources/rollpig-
 
 当前静态资源包不需要私有 token；`ROLLPIG_PRIVATE_RESOURCE_TOKEN` 仅在自建带鉴权的资源服务时才需要。
 
-## 构建与校验
-
-更新公有包后，建议至少检查：
-
-```powershell
-python tools/build_rollpig_resource_pack.py `
-  --base-resource-dir path/to/plugin/resource `
-  --output-dir rollpig `
-  --version 2026-06-15.2
-```
-
-更新 `rollpig-pjsk/` 后：
-
-```powershell
-python tools/update_private_manifest.py --version pjsk-2026-06-15.1
-```
-
-提交前建议确认：
-
-- `pig.json` 没有重复 `id`
-- 每个 `id` 都有对应图片
-- `manifest.json` 中的 `sha256` 与实际文件一致
-- 资源版本号已更新
-- 公有包与外挂包的边界没有混淆
-
 ## 如何贡献 (Contributing)
 
 如果你绘制了新的小猪并希望合并到本仓库，欢迎提交 Pull Request！请确保你的提交符合以下规范：
@@ -148,6 +145,7 @@ python tools/update_private_manifest.py --version pjsk-2026-06-15.1
 1. **图片规范**：
    - **尺寸**：强烈建议符合设定的尺寸比例（如 `240x240` 等设定）。
    - **格式与背景**：必须是 `.png` 格式，且**必须为透明背景**。
+   - **GIF 例外**：仅 `rollpig-gif/` 这类动态 overlay 包允许使用 `.gif`。
    - **命名**：图片文件名必须与 `pig.json` 中的 `id` 保持一致（例如 `id` 为 `mypig`，图片需命名为 `mypig.png`）。
 
 2. **数据规范**：

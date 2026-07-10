@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "overlay": true,
+  "overlay_name": "rollpig-gif",
+  "resource_version": "gif-2026-07-10.1",
+  "min_plugin_version": "0.8.0",
+  "base_manifest_url": "https://pig.felislab.cc/resources/rollpig/manifest.json",
+  "allow_override": false,
+  "pig_json": {
+    "path": "pig.json",
+    "size": 2018,
+    "sha256": "8f86d5a313f868dfc924e7cfcdb9aabbc05ba15000a2976d9b45c9a1718027eb"
+  },
+  "created_at": "2026-07-10T12:12:50.333125+00:00",
+  "optional_files": {
+    "pig_rules": {
+      "path": "pig_rules.json",
+      "size": 117,
+      "sha256": "88e925a5d8fb54846ed94c3558764f34b5046ada9c9b0141e5a0d38d60efb14d"
+    },
+    "pig_overrides": {
+      "path": "pig_overrides.json",
+      "size": 4,
+      "sha256": "a5338d955b09046ec0b16f3a9625b7955c763aae07dc722e474e6078745f932f"
+    }
+  },
+  "images": [
+    {
+      "id": "cute-pig",
+      "filename": "cute-pig.gif",
+      "path": "images/cute-pig.gif",
+      "size": 186965,
+      "sha256": "1ef186c4307b33b780e1ea557b54f15b51a39232ea30a2f021f9d2298468c1d8"
+    },
+    {
+      "id": "hanging-pig",
+      "filename": "hanging-pig.gif",
+      "path": "images/hanging-pig.gif",
+      "size": 627598,
+      "sha256": "28f5a8cceabd28f027150e2681a24f09c88d2fadd11b179d0c250e1085ea8aae"
+    },
+    {
+      "id": "strolling-pig",
+      "filename": "strolling-pig.gif",
+      "path": "images/strolling-pig.gif",
+      "size": 157004,
+      "sha256": "865de59e08707a9b3263701ba619baad4ed631e50174ddf685336edc69b0aa6b"
+    },
+    {
+      "id": "carrot-pig",
+      "filename": "carrot-pig.gif",
+      "path": "images/carrot-pig.gif",
+      "size": 205766,
+      "sha256": "ac5253f07936b93152572a5e2aacb476e977a4851945bb5c15a2c61c5dd1bca5"
+    },
+    {
+      "id": "disco-pig",
+      "filename": "disco-pig.gif",
+      "path": "images/disco-pig.gif",
+      "size": 22182,
+      "sha256": "c85a00f8a1fa928ebe6b2ac32d4d91cdf09f5d213267f5f9146aacac1ae05d43"
+    },
+    {
+      "id": "cooked-pig",
+      "filename": "cooked-pig.gif",
+      "path": "images/cooked-pig.gif",
+      "size": 128805,
+      "sha256": "380e52daae7080e4fcb4ce7cda47459152f8558e23476f87ecc2eef4e883cd0a"
+    }
+  ]
+}
