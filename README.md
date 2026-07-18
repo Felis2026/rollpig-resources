@@ -1,10 +1,38 @@
-# RollPig Resources
+<div align="center">
+  <img src="https://raw.githubusercontent.com/Felis2026/nonebot-plugin-rollpig-plus/refs/heads/main/docs/assets/logo.jpeg" width="180" alt="RollPig Logo">
 
-`rollpig-resources` 是 `nonebot-plugin-rollpig` 的小猪静态资源包仓库，用于独立维护小猪文案、图片、规则文件与发布清单。
+  <h1>🐖 RollPig Resources 🐖</h1>
 
-这个仓库的目标是：让插件本体不用频繁发版，也能通过远端 `manifest.json` 同步新增小猪与图片资源。
+  <p><strong>RollPig 系列的小猪资源仓库</strong></p>
+  <p>独立维护上游原版和 RollPig Plus 使用的小猪文案、图片、规则文件与发布清单。</p>
 
-## 目录结构
+  <p>
+    <img src="https://img.shields.io/badge/Packages-Public%20%2B%20Overlay-ff69b4" alt="Public and Overlay packages">
+    <img src="https://img.shields.io/badge/Integrity-SHA256-blue" alt="SHA256 integrity verification">
+    <img src="https://img.shields.io/badge/Contributions-Welcome-brightgreen" alt="Contributions welcome">
+  </p>
+</div>
+
+<p align="center">
+  <a href="https://github.com/Bearlele/nonebot-plugin-rollpig">上游原作</a> ·
+  <a href="https://github.com/Felis2026/nonebot-plugin-rollpig-plus">Plus</a> ·
+  <a href="https://github.com/Felis2026/rollpig-cloud">Cloud</a> ·
+  <a href="https://github.com/Felis2026/rollpig-resources">Resources</a>
+</p>
+
+这个仓库让 RollPig 系列插件无需频繁发版，也能通过远端 `manifest.json` 同步新增小猪与图片资源。
+
+## 🧭 资源包定位
+
+| 资源包 | 类型 | 使用方 | 是否需要手动配置 |
+| --- | --- | --- | --- |
+| `rollpig/` | 公有全量包 | 上游原版、RollPig Plus | 否，默认资源入口 |
+| `rollpig-gif/` | 官方 GIF Overlay | RollPig Plus | 否，由 Plus 固定加载 |
+| `rollpig-pjsk/` | PJSK 专用 Overlay | RollPig Plus | 是，按需追加 |
+
+本文中的 Overlay 指在公有全量包之上追加或覆盖内容的叠加资源包。公有包保持上游兼容，GIF 与 PJSK 等增强能力主要由 RollPig Plus 使用。
+
+## 📁 目录结构
 
 ```text
 rollpig-resources/
@@ -13,13 +41,13 @@ rollpig-resources/
 │  ├─ pig.json               # 小猪基础数据
 │  ├─ pig_rules.json         # 可选规则元数据
 │  └─ images/                # 小猪图片，文件名与 pig id 对应
-├─ rollpig-pjsk/             # PJSK Bot 专用外挂包
+├─ rollpig-pjsk/             # PJSK Bot 专用 Overlay
 │  ├─ manifest.json
-│  ├─ pig.json               # 只放外挂包新增小猪
+│  ├─ pig.json               # 只放 Overlay 新增小猪
 │  ├─ pig_overrides.json     # 可选，覆盖公有小猪字段
 │  ├─ pig_rules.json
 │  └─ images/
-├─ rollpig-gif/              # GIF 动态小猪外挂包
+├─ rollpig-gif/              # 官方 GIF 动态小猪 Overlay
 │  ├─ manifest.json
 │  ├─ pig.json
 │  ├─ pig_overrides.json
@@ -29,7 +57,7 @@ rollpig-resources/
 └─ tools/                    # 构建与清单更新脚本
 ```
 
-## 资源包说明
+## 📦 资源包说明
 
 ### 公有全量包：`rollpig/`
 
@@ -37,34 +65,34 @@ rollpig-resources/
 
 当前插件会把远端 `pig.json` 作为完整小猪列表读取，所以这个目录必须维护为**全量包**，不能只放新增资源。
 
-### Bot 专用外挂包：`rollpig-pjsk/`
+### PJSK 专用 Overlay：`rollpig-pjsk/`
 
-`rollpig-pjsk/` 是在公有全量包之上加载的 overlay，主要用于维护不准备进入公有包或上游基础版的 Bot 专属小猪。
+`rollpig-pjsk/` 在公有全量包之上加载，主要维护不准备进入公有包的 PJSK Bot 专属小猪。
 
 推荐加载顺序：
 
 ```text
-插件内置资源 < 公有云端资源包 < Bot 专用外挂包
+插件内置资源 < 公有云端资源包 < PJSK 专用 Overlay
 ```
 
-外挂包约定：
+Overlay 约定：
 
 - `pig.json` 只放新增专属小猪。
 - `pig_overrides.json` 用于按 `id` 覆盖公有小猪字段。
 - `pig_rules.json` 与公有规则做并集。
-- 图片查找顺序为：外挂包图片 → 公有包图片 → 插件内置图片。
+- 图片查找顺序为：Overlay 图片 → 公有包图片 → 插件内置图片。
 
-### GIF 动态小猪外挂包：`rollpig-gif/`
+### 官方 GIF Overlay：`rollpig-gif/`
 
-`rollpig-gif/` 是专门存放 GIF 动态小猪的 overlay 包，只追加普通小猪，不覆盖公有包字段，也不写入熟食等特殊规则。
+`rollpig-gif/` 是 RollPig Plus 固定加载的官方动态小猪 Overlay，只追加普通小猪，不覆盖公有包字段，也不写入熟食等特殊规则。
 
-GIF 包约定：
+GIF Overlay 约定：
 
 - `pig.json` 只放 GIF 包新增小猪。
 - 图片文件使用 `.gif`，文件名与 `id` 对应。
-- 需要配合支持 GIF 资源的 RollPig Plus 版本使用。
+- 需要配合支持 GIF 资源的 RollPig Plus 使用。
 
-## 文件格式
+## 🧩 文件格式
 
 ### `pig.json`
 
@@ -83,7 +111,7 @@ GIF 包约定：
 
 - `id` 使用小写英文、数字、短横线或下划线。
 - 图片文件名与 `id` 对应，例如 `pig` 对应 `images/pig.png`。
-- `pig.json` 保持基础格式，不写烤猪规则，方便兼容上游基础版。
+- `pig.json` 保持基础格式，不写烤猪规则，方便兼容上游原作。
 
 ### `pig_rules.json`
 
@@ -95,7 +123,7 @@ GIF 包约定：
 - `sold_pigs`：售罄
 - `roast_excluded_pigs`：不进入普通烤猪池的形态
 
-不支持这些规则的插件版本会忽略该文件；支持规则的 Felis 版会读取并合并内置规则、云端公有规则与外挂包规则。
+不支持这些规则的插件版本会忽略该文件；RollPig Plus 会读取并合并内置规则、云端公有规则与 Overlay 规则。
 
 ### `manifest.json`
 
@@ -110,7 +138,7 @@ GIF 包约定：
 
 插件会根据 manifest 下载并校验资源，校验失败时回退旧缓存或插件内置资源。
 
-## 发布地址
+## 🌐 发布地址
 
 公有全量包：
 
@@ -118,13 +146,13 @@ GIF 包约定：
 https://pig.felislab.cc/resources/rollpig/manifest.json
 ```
 
-Bot 专用外挂包：
+PJSK 专用 Overlay：
 
 ```text
 https://pig.felislab.cc/resources/rollpig-pjsk/manifest.json
 ```
 
-GIF 动态小猪外挂包：
+官方 GIF Overlay：
 
 ```text
 https://pig.felislab.cc/resources/rollpig-gif/manifest.json
@@ -146,20 +174,20 @@ RollPig Plus `0.8.2+` 推荐配置示例：
 }
 ```
 
-`rollpig-gif` 是 RollPig Plus `0.8.2+` 内部固定使用的官方动态小猪包，Plus 用户不需要在配置里手动填写。
+`rollpig-gif` 是 RollPig Plus `0.8.2+` 固定使用的官方 GIF Overlay，Plus 用户不需要在配置里手动填写。
 
 当前静态资源包不需要私有 token；`ROLLPIG_PRIVATE_RESOURCE_TOKEN` 仅在自建带鉴权的资源服务时才需要。
 
 如果你想维护自己的本地私有小猪包，请参考 [自建本地私有包指南](docs/local-private-pack-guide.md)。
 
-## 如何贡献 (Contributing)
+## 🤝 如何贡献
 
 如果你绘制了新的小猪并希望合并到本仓库，欢迎提交 Pull Request！请确保你的提交符合以下规范：
 
 1. **图片规范**：
    - **尺寸**：强烈建议符合设定的尺寸比例（如 `240x240` 等设定）。
    - **格式与背景**：必须是 `.png` 格式，且**必须为透明背景**。
-   - **GIF 例外**：仅 `rollpig-gif/` 这类动态 overlay 包允许使用 `.gif`。
+   - **GIF 例外**：仅 `rollpig-gif/` 这类动态 Overlay 允许使用 `.gif`。
    - **命名**：图片文件名必须与 `pig.json` 中的 `id` 保持一致（例如 `id` 为 `mypig`，图片需命名为 `mypig.png`）。
 
 2. **数据规范**：
@@ -171,7 +199,7 @@ RollPig Plus `0.8.2+` 推荐配置示例：
    - 提交的内容必须是你个人原创，或你已获得原作者授权允许以本仓库规则分发的素材。
    - 请在提交 PR 或 Issue 时简单备注图文的来源。对于来源不明的内容将无法合并。
 
-## 来源说明
+## 🧾 来源说明
 
 本仓库汇集了多方创作的 RollPig 资源，并非单一作者、单一授权的素材库。具体来源分为以下几类：
 
@@ -186,7 +214,7 @@ RollPig Plus `0.8.2+` 推荐配置示例：
 
 如有任何资源存在来源错漏、侵权或不适合分发的情况，请通过 Issue 提出，我会在核实后第一时间补充说明、替换或移除相关内容。
 
-## 使用边界
+## ⚖️ 使用边界
 
 由于资源来源的复合性，**本仓库无法作为一套“统一授权”的通用素材包提供无限制分发或商用**。为了避免版权争议，建议遵循以下使用边界：
 
@@ -197,9 +225,9 @@ RollPig Plus `0.8.2+` 推荐配置示例：
 
 简单总结：在 RollPig 相关的个人/社群娱乐范围内可以放心使用；如果要提取素材做与此无关的其他用途，请务必先核实各项素材的具体来源。
 
-## 相关项目
+## 🔗 相关项目
 
-- 原作插件：[Bearlele/nonebot-plugin-rollpig](https://github.com/Bearlele/nonebot-plugin-rollpig)
-- Felis 版插件：[Felis2026/nonebot-plugin-rollpig](https://github.com/Felis2026/nonebot-plugin-rollpig)
+- 上游原作：[Bearlele/nonebot-plugin-rollpig](https://github.com/Bearlele/nonebot-plugin-rollpig)
+- RollPig Plus：[Felis2026/nonebot-plugin-rollpig-plus](https://github.com/Felis2026/nonebot-plugin-rollpig-plus)
 - 云端存储服务：[Felis2026/rollpig-cloud](https://github.com/Felis2026/rollpig-cloud)
 - PigHub：[pighub.top](https://pighub.top/)
