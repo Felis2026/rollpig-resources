@@ -2,26 +2,26 @@
   "schema_version": 1,
   "overlay": true,
   "overlay_name": "rollpig-gif",
-  "resource_version": "gif-2026-07-10.1",
+  "resource_version": "gif-2026-07-19.1",
   "min_plugin_version": "0.8.0",
   "base_manifest_url": "https://pig.felislab.cc/resources/rollpig/manifest.json",
   "allow_override": false,
   "pig_json": {
     "path": "pig.json",
-    "size": 2018,
-    "sha256": "8f86d5a313f868dfc924e7cfcdb9aabbc05ba15000a2976d9b45c9a1718027eb"
+    "size": 1980,
+    "sha256": "150e287f3e9fabffbdcf704055ca8a688a5ab2f1d16900f17cdb832a7d505dde"
   },
-  "created_at": "2026-07-10T12:12:50.333125+00:00",
+  "created_at": "2026-07-19T01:34:15.723201+00:00",
   "optional_files": {
     "pig_rules": {
       "path": "pig_rules.json",
-      "size": 117,
-      "sha256": "88e925a5d8fb54846ed94c3558764f34b5046ada9c9b0141e5a0d38d60efb14d"
+      "size": 110,
+      "sha256": "ff551318e1ad9a10bc82db6447a31d0b2ed6e43b33cd7647fe71863ce51d8aff"
     },
     "pig_overrides": {
       "path": "pig_overrides.json",
-      "size": 4,
-      "sha256": "a5338d955b09046ec0b16f3a9625b7955c763aae07dc722e474e6078745f932f"
+      "size": 3,
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
     }
   },
   "images": [

@@ -21,8 +21,14 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
+def write_utf8_lf(path: Path, text: str) -> None:
+    """以无 BOM UTF-8 和 LF 写入文本，保证 manifest 字节哈希跨平台稳定。"""
+
+    path.write_text(text, encoding="utf-8", newline="\n")
+
+
 def read_pigs(path: Path) -> list[dict[str, Any]]:
-    data = json.loads(path.read_text(encoding="utf-8"))
+    data = json.loads(path.read_text(encoding="utf-8-sig"))
     if not isinstance(data, list):
         raise ValueError(f"pig json must be a list: {path}")
     return data
@@ -82,7 +88,8 @@ def copy_optional_rules(source_rules: Path | None, output_dir: Path) -> dict[str
     if source_rules is None or not source_rules.exists():
         return {}
     target = output_dir / "pig_rules.json"
-    shutil.copy2(source_rules, target)
+    # JSON 会进入 manifest 的字节校验；复制时统一编码与换行，不能沿用来源平台格式。
+    write_utf8_lf(target, source_rules.read_text(encoding="utf-8-sig"))
     return {
         "pig_rules": {
             "path": "pig_rules.json",
@@ -113,7 +120,7 @@ def main() -> None:
 
     pigs = merge_pigs(base_resource_dir / "pig.json", extra_json_paths)
     pig_json_path = output_dir / "pig.json"
-    pig_json_path.write_text(json.dumps(pigs, ensure_ascii=False, indent=4), encoding="utf-8")
+    write_utf8_lf(pig_json_path, json.dumps(pigs, ensure_ascii=False, indent=4))
 
     image_items = copy_images(pigs, image_dirs, output_dir / "images")
     optional_files = copy_optional_rules(base_resource_dir / "pig_rules.json", output_dir)
@@ -131,10 +138,7 @@ def main() -> None:
         "optional_files": optional_files,
         "created_at": dt.datetime.now(dt.timezone.utc).isoformat(),
     }
-    (output_dir / "manifest.json").write_text(
-        json.dumps(manifest, ensure_ascii=False, indent=2),
-        encoding="utf-8",
-    )
+    write_utf8_lf(output_dir / "manifest.json", json.dumps(manifest, ensure_ascii=False, indent=2))
     print(f"built rollpig resource pack: version={version} pigs={len(pigs)} output={output_dir}")
 
 

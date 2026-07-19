@@ -27,15 +27,27 @@ def file_meta(path: Path, relative_path: str) -> dict[str, object]:
 
 
 def read_json(path: Path) -> Any:
-    return json.loads(path.read_text(encoding="utf-8"))
+    # 兼容 Windows/1Panel 上传链路偶尔写入的 UTF-8 BOM；输出仍统一为无 BOM UTF-8。
+    return json.loads(path.read_text(encoding="utf-8-sig"))
+
+
+def normalize_json_file(path: Path) -> None:
+    """原地统一 JSON 为无 BOM UTF-8/LF，使生成的 manifest 与干净检出字节一致。"""
+
+    if not path.exists():
+        return
+    text = path.read_text(encoding="utf-8-sig")
+    path.write_text(text, encoding="utf-8", newline="\n")
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Update RollPig private overlay manifest")
     parser.add_argument(
         "--pack-dir",
+        "--pack",
+        dest="pack_dir",
         default="rollpig-pjsk",
-        help="private overlay directory relative to repository root",
+        help="overlay directory, absolute or relative to repository root",
     )
     parser.add_argument(
         "--version",
@@ -58,6 +70,12 @@ def main() -> None:
     pig_rules_path = pack_dir / "pig_rules.json"
     pig_overrides_path = pack_dir / "pig_overrides.json"
     images_dir = pack_dir / "images"
+
+    # ================================ JSON字节规范化 ================================ #
+    # Git 仓库固定使用 LF；先规范化再计算大小和哈希，避免 Windows 生成的 CRLF
+    # manifest 在 GitHub Linux 检出后失效。
+    for json_path in (pig_json_path, pig_rules_path, pig_overrides_path):
+        normalize_json_file(json_path)
     pigs = read_json(pig_json_path)
 
     if not isinstance(pigs, list):
@@ -115,7 +133,11 @@ def main() -> None:
         )
     manifest["images"] = image_items
 
-    manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    manifest_path.write_text(
+        json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+        newline="\n",
+    )
     print(f"updated private manifest: {manifest_path} pigs={len(pigs)} version={resource_version}")
 
 

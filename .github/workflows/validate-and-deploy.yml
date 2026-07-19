@@ -1,0 +1,208 @@
+name: Validate and deploy RollPig resources
+
+on:
+  pull_request:
+    paths:
+      - "rollpig/**"
+      - "rollpig-gif/**"
+      - "rollpig-pjsk/**"
+      - "tools/**"
+      - "deploy/**"
+      - ".github/workflows/validate-and-deploy.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "rollpig/**"
+      - "rollpig-gif/**"
+      - "rollpig-pjsk/**"
+      - "tools/**"
+      - "deploy/**"
+      - ".github/workflows/validate-and-deploy.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      BASE_REVISION: ${{ github.event.pull_request.base.sha || github.event.before || '' }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+
+      - name: Install image validator
+        run: python -m pip install --disable-pip-version-check "Pillow>=12,<13"
+
+      - name: Validate scripts and whitespace
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m compileall -q tools
+          sh -n deploy/apply-github-resource-package.sh
+          if [[ -n "$BASE_REVISION" && ! "$BASE_REVISION" =~ ^0+$ ]]; then
+            git diff --check "$BASE_REVISION"...HEAD
+          else
+            git diff --check
+          fi
+
+      - name: Validate all resource packs
+        shell: bash
+        run: |
+          set -euo pipefail
+          args=()
+          if [[ -n "$BASE_REVISION" && ! "$BASE_REVISION" =~ ^0+$ ]]; then
+            args+=(--base-ref "$BASE_REVISION")
+          fi
+          python tools/check_resources.py "${args[@]}"
+
+  deploy:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: production
+    concurrency:
+      group: rollpig-resources-production
+      cancel-in-progress: false
+    env:
+      DEPLOY_HOST: ${{ secrets.ROLLPIG_DEPLOY_HOST }}
+      DEPLOY_PORT: ${{ secrets.ROLLPIG_DEPLOY_PORT }}
+      DEPLOY_USER: ${{ secrets.ROLLPIG_DEPLOY_USER }}
+      DEPLOY_ROOT: ${{ secrets.ROLLPIG_DEPLOY_ROOT }}
+      DEPLOY_SSH_KEY: ${{ secrets.ROLLPIG_DEPLOY_SSH_KEY }}
+      DEPLOY_KNOWN_HOSTS: ${{ secrets.ROLLPIG_DEPLOY_KNOWN_HOSTS }}
+      DEPLOY_PUBLIC_BASE_URL: ${{ vars.ROLLPIG_RESOURCE_PUBLIC_BASE_URL }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Ignore a superseded main revision
+        id: revision
+        shell: bash
+        run: |
+          set -euo pipefail
+          latest_main=$(git ls-remote --exit-code origin refs/heads/main | awk 'NR == 1 {print $1}')
+          if [[ "$latest_main" == "$GITHUB_SHA" ]]; then
+            echo "current=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "current=false" >> "$GITHUB_OUTPUT"
+            echo "Skip deployment: $GITHUB_SHA has been superseded by $latest_main"
+          fi
+
+      - name: Validate deployment settings
+        if: steps.revision.outputs.current == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          for name in DEPLOY_HOST DEPLOY_PORT DEPLOY_USER DEPLOY_ROOT DEPLOY_SSH_KEY DEPLOY_KNOWN_HOSTS; do
+            if [[ -z "${!name:-}" ]]; then
+              echo "Missing GitHub Actions secret: $name" >&2
+              exit 1
+            fi
+          done
+          if [[ ! "$DEPLOY_PORT" =~ ^[0-9]+$ ]] || (( DEPLOY_PORT < 1 || DEPLOY_PORT > 65535 )); then
+            echo "ROLLPIG_DEPLOY_PORT must be between 1 and 65535" >&2
+            exit 1
+          fi
+          if [[ ! "$DEPLOY_ROOT" =~ ^/[A-Za-z0-9._/-]+$ ]]; then
+            echo "ROLLPIG_DEPLOY_ROOT must be a simple absolute path" >&2
+            exit 1
+          fi
+          if [[ ! "$DEPLOY_HOST" =~ ^[A-Za-z0-9.-]+$ || ! "$DEPLOY_USER" =~ ^[A-Za-z_][A-Za-z0-9_-]*$ ]]; then
+            echo "ROLLPIG_DEPLOY_HOST or ROLLPIG_DEPLOY_USER is invalid" >&2
+            exit 1
+          fi
+          if [[ -z "$DEPLOY_PUBLIC_BASE_URL" ]]; then
+            DEPLOY_PUBLIC_BASE_URL="https://pig.felislab.cc/resources"
+          fi
+          case "$DEPLOY_PUBLIC_BASE_URL" in
+            http://*|https://*) ;;
+            *)
+              echo "ROLLPIG_RESOURCE_PUBLIC_BASE_URL must use HTTP or HTTPS" >&2
+              exit 1
+              ;;
+          esac
+          if [[ "$DEPLOY_PUBLIC_BASE_URL" == *"'"* || "$DEPLOY_PUBLIC_BASE_URL" == *" "* || "$DEPLOY_PUBLIC_BASE_URL" == *$'\n'* ]]; then
+            echo "ROLLPIG_RESOURCE_PUBLIC_BASE_URL is invalid" >&2
+            exit 1
+          fi
+          echo "DEPLOY_PUBLIC_BASE_URL=$DEPLOY_PUBLIC_BASE_URL" >> "$GITHUB_ENV"
+
+      - name: Build checksummed deployment package
+        if: steps.revision.outputs.current == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          archive_path="$RUNNER_TEMP/rollpig-resources-${GITHUB_SHA}.tar.gz"
+          tar -czf "$archive_path" rollpig rollpig-gif rollpig-pjsk
+          archive_sha256=$(sha256sum "$archive_path" | awk '{print $1}')
+          {
+            echo "ARCHIVE_PATH=$archive_path"
+            echo "ARCHIVE_SHA256=$archive_sha256"
+            echo "REMOTE_ARCHIVE=/tmp/rollpig-resources-${GITHUB_SHA}.tar.gz"
+            echo "REMOTE_SCRIPT=/tmp/apply-rollpig-resources-${GITHUB_SHA}.sh"
+          } >> "$GITHUB_ENV"
+
+      - name: Configure verified SSH
+        if: steps.revision.outputs.current == 'true'
+        run: |
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$DEPLOY_SSH_KEY" | tr -d '\r' > ~/.ssh/id_ed25519
+          printf '%s\n' "$DEPLOY_KNOWN_HOSTS" | tr -d '\r' > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/id_ed25519 ~/.ssh/known_hosts
+
+      - name: Upload deployment package
+        if: steps.revision.outputs.current == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          ssh_args=(-P "$DEPLOY_PORT" -o BatchMode=yes -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes)
+          scp "${ssh_args[@]}" "$ARCHIVE_PATH" "$DEPLOY_USER@$DEPLOY_HOST:$REMOTE_ARCHIVE"
+          scp "${ssh_args[@]}" deploy/apply-github-resource-package.sh \
+            "$DEPLOY_USER@$DEPLOY_HOST:$REMOTE_SCRIPT"
+
+      - name: Deploy, verify, and roll back on failure
+        if: steps.revision.outputs.current == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          ssh -p "$DEPLOY_PORT" \
+            -o BatchMode=yes -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes \
+            "$DEPLOY_USER@$DEPLOY_HOST" \
+            "sh '$REMOTE_SCRIPT' '$REMOTE_ARCHIVE' '$GITHUB_SHA' '$ARCHIVE_SHA256' '$DEPLOY_ROOT' '$DEPLOY_PUBLIC_BASE_URL'"
+
+      - name: Verify public manifests from runner
+        if: steps.revision.outputs.current == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          for package in rollpig rollpig-gif rollpig-pjsk; do
+            downloaded_manifest="$RUNNER_TEMP/$package-manifest.json"
+            curl --fail --silent --show-error --location \
+              --max-time 20 --retry 5 --retry-delay 3 \
+              "$DEPLOY_PUBLIC_BASE_URL/$package/manifest.json?revision=$GITHUB_SHA" \
+              -o "$downloaded_manifest"
+            cmp "$package/manifest.json" "$downloaded_manifest"
+          done
+
+      - name: Remove remote temporary script
+        if: always() && steps.revision.outputs.current == 'true'
+        shell: bash
+        run: |
+          if [[ -f ~/.ssh/id_ed25519 && -n "${REMOTE_SCRIPT:-}" ]]; then
+            ssh -p "$DEPLOY_PORT" \
+              -o BatchMode=yes -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes \
+              "$DEPLOY_USER@$DEPLOY_HOST" \
+              "rm -f '$REMOTE_SCRIPT' '$REMOTE_ARCHIVE'" || true
+          fi

@@ -53,6 +53,7 @@ rollpig-resources/
 │  ├─ pig_overrides.json
 │  ├─ pig_rules.json
 │  └─ images/
+├─ deploy/                    # 服务器原子发布与失败回滚脚本
 ├─ docs/                     # 自建私有包、资源维护等说明文档
 └─ tools/                    # 构建与清单更新脚本
 ```
@@ -179,6 +180,18 @@ RollPig Plus `0.8.2+` 推荐配置示例：
 当前静态资源包不需要私有 token；`ROLLPIG_PRIVATE_RESOURCE_TOKEN` 仅在自建带鉴权的资源服务时才需要。
 
 如果你想维护自己的本地私有小猪包，请参考 [自建本地私有包指南](docs/local-private-pack-guide.md)。
+
+## ✅ 自动校验与发布
+
+本地提交前可以运行：
+
+```powershell
+python tools/check_resources.py --base-ref origin/main
+```
+
+仓库工作流会在 Pull Request 中只做校验；推送到 `main` 后，校验通过才会把三个资源包原子发布到 Cloud 静态目录。发布失败或公网 manifest 与本次文件不一致时会自动恢复旧资源，Cloud 服务无需重启。
+
+首次启用所需的 GitHub Environment、Secrets 和服务器条件见 [资源自动校验与发布](docs/automated-deployment.md)。
 
 ## 🤝 如何贡献
 

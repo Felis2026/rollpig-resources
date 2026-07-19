@@ -1,2 +1,4 @@
-﻿* text=auto eol=lf
+# Manifest 会校验资源原始字节；固定文本换行，避免不同系统检出后大小和哈希漂移。
+* text=auto eol=lf
 *.png binary
+*.gif binary
