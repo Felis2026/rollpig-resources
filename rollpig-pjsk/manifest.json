@@ -2,13 +2,13 @@
   "schema_version": 1,
   "overlay": true,
   "overlay_name": "rollpig-pjsk",
-  "resource_version": "pjsk-2026-07-19.1",
+  "resource_version": "pjsk-2026-07-20.1",
   "base_manifest_url": "https://pig.felislab.cc/resources/rollpig/manifest.json",
   "allow_override": false,
   "pig_json": {
     "path": "pig.json",
-    "size": 1576,
-    "sha256": "e5ae35b6a2f9140af0ae559416f71fdccf286a9857fc7ad4b768e0b7b3549221"
+    "size": 1896,
+    "sha256": "ec4759b676158bec22ccbbb6da19b5dec5435af99388755bd40dd75491384c19"
   },
   "optional_files": {
     "pig_rules": {
@@ -50,8 +50,15 @@
       "path": "images/chunithm-pig.png",
       "size": 88062,
       "sha256": "d0dfc542f469ecd33b70cc7f3908fc92de2881e2aa9a36273e7c07ba6cecfabe"
+    },
+    {
+      "id": "taiko-pig",
+      "filename": "taiko-pig.png",
+      "path": "images/taiko-pig.png",
+      "size": 60770,
+      "sha256": "3ccd295f44c67b1a47c6bd07f6e3a3189c4f5debc229a2c3cadb31a1da407238"
     }
   ],
-  "created_at": "2026-07-19T01:34:15.723201+00:00",
+  "created_at": "2026-07-20T03:55:46.321272+00:00",
   "min_plugin_version": "0.6.2"
 }
