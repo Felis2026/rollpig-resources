@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "resource_version": "2026-07-20.1",
+  "resource_version": "2026-08-01.1",
   "min_plugin_version": "0.2.0",
   "pig_json": {
     "path": "pig.json",
-    "size": 64874,
-    "sha256": "3eeb8d91561e5cd1fea548b94126dd459e1d13184968440decf58aa6c16527c7"
+    "size": 67580,
+    "sha256": "b6996624bbd4887c810c270315ecc1ee6457c0d8ca4f3f0df863fdb24166efb3"
   },
   "images": [
     {
@@ -1188,8 +1188,8 @@
       "id": "soup-pig",
       "filename": "soup-pig.png",
       "path": "images/soup-pig.png",
-      "size": 48561,
-      "sha256": "796c92ab7f93ec70d974049c9c5c94fdaf43bbd237ef162d7f00d6696736dd55"
+      "size": 37546,
+      "sha256": "563a577ce00ab683372e9f4b8baa5f3c4cd8af321a48899a1e0f250b47b6f355"
     },
     {
       "id": "katsu-rice-pig",
@@ -1230,8 +1230,8 @@
       "id": "pig-rice",
       "filename": "pig-rice.png",
       "path": "images/pig-rice.png",
-      "size": 74517,
-      "sha256": "b05e850a937eaefbf4f7b6137d96bbd9abe6df095bc9e88440c21219c88c8383"
+      "size": 64741,
+      "sha256": "6d9003e49e9d1e19e4a822580272ac6a186ca647f456b82b8a5f28ff7b8e7cbf"
     },
     {
       "id": "parking-pig",
@@ -1288,14 +1288,70 @@
       "path": "images/awakened-pig.png",
       "size": 72181,
       "sha256": "e6d48c8d9c62b9767b0e7635854d823ba80e96378dcb1fe9b221b61cdbe91eee"
+    },
+    {
+      "id": "mc-pig",
+      "filename": "mc-pig.png",
+      "path": "images/mc-pig.png",
+      "size": 37044,
+      "sha256": "ef2f0d06acac9db1452a5075f15010b871f3b622b4efeed948fe5f6927765729"
+    },
+    {
+      "id": "doomsday-pig",
+      "filename": "doomsday-pig.png",
+      "path": "images/doomsday-pig.png",
+      "size": 43978,
+      "sha256": "a48cf59c294faed343543ebf8a246bee89f656bea23bbeb06b63301fa66b4d66"
+    },
+    {
+      "id": "maid-pig",
+      "filename": "maid-pig.png",
+      "path": "images/maid-pig.png",
+      "size": 43668,
+      "sha256": "20a2464da65f163e07ae21a4b58d9da3056bc8d2ca2cfe73db3cd0612d55afd1"
+    },
+    {
+      "id": "bull-pig",
+      "filename": "bull-pig.png",
+      "path": "images/bull-pig.png",
+      "size": 48487,
+      "sha256": "48ca244826ba750a6c7b644a7173c37a7843f56c77f1bc7c7388eeba1286672d"
+    },
+    {
+      "id": "trap-pig",
+      "filename": "trap-pig.png",
+      "path": "images/trap-pig.png",
+      "size": 32905,
+      "sha256": "01f4a39b21bc43e242cb1dd10bd43ec3956e30e9600a577f858ea9d6cfec1bbc"
+    },
+    {
+      "id": "emoji-king-pig",
+      "filename": "emoji-king-pig.png",
+      "path": "images/emoji-king-pig.png",
+      "size": 60611,
+      "sha256": "64d6294eecc44c372494364693ab201d279a0ae15a233a3086c9fbaaa8f04358"
+    },
+    {
+      "id": "samurai-pig",
+      "filename": "samurai-pig.png",
+      "path": "images/samurai-pig.png",
+      "size": 98944,
+      "sha256": "a484259a8ced0f515e39fceb868c56570b154476c58062554403cf9e0422ce98"
+    },
+    {
+      "id": "tv-pig",
+      "filename": "tv-pig.png",
+      "path": "images/tv-pig.png",
+      "size": 66230,
+      "sha256": "483ac574da49a5fe229d70055696b97699ac5a6cbaf61dca4841a2bb81215f1c"
     }
   ],
   "optional_files": {
     "pig_rules": {
       "path": "pig_rules.json",
-      "size": 579,
-      "sha256": "1fa58238023bf062130d4253ef1404f3ce0b9c94df42744a030b80a3a6146134"
+      "size": 562,
+      "sha256": "5e3ddbc0d4b3d9da8872aa556138ea8f27624608d07173dac5d605e15ce1060f"
     }
   },
-  "created_at": "2026-07-20T03:55:46.248423+00:00"
+  "created_at": "2026-07-28T13:02:16.295757+00:00"
 }
