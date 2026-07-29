@@ -8,7 +8,7 @@ revision="${2:-}"
 expected_archive_sha256="${3:-}"
 project_dir_input="${4:-}"
 public_base_url="${5:-https://pig.felislab.cc/resources}"
-packages="rollpig rollpig-gif rollpig-pjsk"
+packages="rollpig rollpig-gif rollpig-pjsk rollpig-roasts"
 
 # ================================ 输入与归档校验 ================================ #
 
@@ -75,7 +75,7 @@ if grep -Eq '(^/|(^|/)\.\.(/|$)|\\)' "$archive_list"; then
     echo "deployment package contains unsafe path" >&2
     exit 2
 fi
-if grep -Ev '^(rollpig|rollpig-gif|rollpig-pjsk)(/.*)?$' "$archive_list" >/dev/null; then
+if grep -Ev '^(rollpig|rollpig-gif|rollpig-pjsk|rollpig-roasts)(/.*)?$' "$archive_list" >/dev/null; then
     echo "deployment package contains an unexpected top-level path" >&2
     exit 2
 fi
@@ -86,7 +86,12 @@ if [ -n "$(find "$staging_dir" -type l -print -quit)" ]; then
     exit 2
 fi
 for package in $packages; do
-    for required_path in manifest.json pig.json images; do
+    if [ "$package" = "rollpig-roasts" ]; then
+        required_paths="manifest.json roast_library.json"
+    else
+        required_paths="manifest.json pig.json images"
+    fi
+    for required_path in $required_paths; do
         if [ ! -e "$staging_dir/$package/$required_path" ]; then
             echo "deployment package missing: $package/$required_path" >&2
             exit 2

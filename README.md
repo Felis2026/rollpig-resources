@@ -29,6 +29,7 @@
 | `rollpig/` | 公有全量包 | 上游原版、RollPig Plus | 否，默认资源入口 |
 | `rollpig-gif/` | 官方 GIF Overlay | RollPig Plus | 否，由 Plus 固定加载 |
 | `rollpig-pjsk/` | PJSK 专用 Overlay | RollPig Plus | 是，按需追加 |
+| `rollpig-roasts/` | 共享烤猪文案 | RollPig Plus 0.10.0+ | 否，随资源同步加载 |
 
 本文中的 Overlay 指在公有全量包之上追加或覆盖内容的叠加资源包。公有包保持上游兼容，GIF 与 PJSK 等增强能力主要由 RollPig Plus 使用。
 
@@ -53,9 +54,12 @@ rollpig-resources/
 │  ├─ pig_overrides.json
 │  ├─ pig_rules.json
 │  └─ images/
+├─ rollpig-roasts/           # 经清洗审核的共享烤猪文案
+│  ├─ manifest.json
+│  └─ roast_library.json
 ├─ deploy/                    # 服务器原子发布与失败回滚脚本
 ├─ docs/                     # 自建私有包、资源维护等说明文档
-└─ tools/                    # 构建与清单更新脚本
+└─ tools/                    # 资源校验、文案清洗与清单更新脚本
 ```
 
 ## 📦 资源包说明
@@ -92,6 +96,19 @@ GIF Overlay 约定：
 - `pig.json` 只放 GIF 包新增小猪。
 - 图片文件使用 `.gif`，文件名与 `id` 对应。
 - 需要配合支持 GIF 资源的 RollPig Plus 使用。
+
+### 共享烤猪文案：`rollpig-roasts/`
+
+`rollpig-roasts/` 是供 RollPig Plus 0.10.0 及以上版本使用的官方共享文案包。保持默认配置并开启资源同步后，插件会自动检查和下载更新，不需要手动安装，也不需要配置 AI Key。
+
+- 没有配置 AI 时，烤猪和烤群友可以直接使用共享文案。
+- 已配置 AI 时，共享文案会与本机生成的文案共同使用，不占本机每个组合 5 条 AI 文案的积累额度。
+- 更新共享包不会覆盖或删除用户自己生成、编写的本地文案。
+- 不想使用时，将 `rollpig_roast_library_manifest_url` 显式设为 `""` 或 `null` 即可关闭。
+
+共享包只包含带 `{k}`、`{v}` 等占位符的模板正文。真实用户 ID、昵称、群记录、Token 和 AI 请求日志不会上传到本仓库；昵称只会在你的 Bot 本地发送消息时临时填入。
+
+部分文案可能对应 PJSK 或其他可选资源包中的小猪。没有加载对应小猪时，这些文案不会被抽到，也不会影响其他功能。
 
 ## 🧩 文件格式
 
@@ -157,6 +174,12 @@ https://pig.felislab.cc/resources/rollpig-pjsk/manifest.json
 
 ```text
 https://pig.felislab.cc/resources/rollpig-gif/manifest.json
+```
+
+共享烤猪文案：
+
+```text
+https://pig.felislab.cc/resources/rollpig-roasts/manifest.json
 ```
 
 RollPig Plus `0.8.2+` 推荐配置示例：

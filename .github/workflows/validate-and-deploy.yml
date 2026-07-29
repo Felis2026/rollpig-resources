@@ -6,6 +6,7 @@ on:
       - "rollpig/**"
       - "rollpig-gif/**"
       - "rollpig-pjsk/**"
+      - "rollpig-roasts/**"
       - "tools/**"
       - "deploy/**"
       - ".github/workflows/validate-and-deploy.yml"
@@ -16,6 +17,7 @@ on:
       - "rollpig/**"
       - "rollpig-gif/**"
       - "rollpig-pjsk/**"
+      - "rollpig-roasts/**"
       - "tools/**"
       - "deploy/**"
       - ".github/workflows/validate-and-deploy.yml"
@@ -145,7 +147,7 @@ jobs:
         run: |
           set -euo pipefail
           archive_path="$RUNNER_TEMP/rollpig-resources-${GITHUB_SHA}.tar.gz"
-          tar -czf "$archive_path" rollpig rollpig-gif rollpig-pjsk
+          tar -czf "$archive_path" rollpig rollpig-gif rollpig-pjsk rollpig-roasts
           archive_sha256=$(sha256sum "$archive_path" | awk '{print $1}')
           {
             echo "ARCHIVE_PATH=$archive_path"
@@ -187,7 +189,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          for package in rollpig rollpig-gif rollpig-pjsk; do
+          for package in rollpig rollpig-gif rollpig-pjsk rollpig-roasts; do
             downloaded_manifest="$RUNNER_TEMP/$package-manifest.json"
             curl --fail --silent --show-error --location \
               --max-time 20 --retry 5 --retry-delay 3 \

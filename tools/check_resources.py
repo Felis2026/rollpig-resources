@@ -13,9 +13,25 @@ from dataclasses import dataclass, field
 from pathlib import Path, PurePosixPath
 from typing import Any
 
+try:
+    from build_roast_library import (
+        ROAST_LIBRARY_MAX_SIZE,
+        _load_exclusion_hashes,
+        roast_text_identity,
+        validate_roast_library_data,
+    )
+except ModuleNotFoundError:
+    from tools.build_roast_library import (
+        ROAST_LIBRARY_MAX_SIZE,
+        _load_exclusion_hashes,
+        roast_text_identity,
+        validate_roast_library_data,
+    )
+
 
 PIG_ID_PATTERN = re.compile(r"^[a-z0-9][a-z0-9_-]*$")
 SHA256_PATTERN = re.compile(r"^[0-9a-f]{64}$")
+ROAST_VERSION_PATTERN = re.compile(r"^roasts-\d{4}-\d{2}-\d{2}\.\d+$")
 RULE_KEYS = (
     "food_pigs",
     "human_pigs",
@@ -71,6 +87,15 @@ class PackState:
     override_ids: set[str] = field(default_factory=set)
     image_count: int = 0
     gif_count: int = 0
+    manifest_bytes: int = 0
+
+
+@dataclass
+class RoastPackState:
+    version: str = ""
+    origin_count: int = 0
+    pair_count: int = 0
+    text_count: int = 0
     manifest_bytes: int = 0
 
 
@@ -504,6 +529,166 @@ def _validate_pack_tree(pack_dir: Path, reporter: Reporter) -> None:
             reporter.error(path, "资源包根目录含未登记文件或目录")
 
 
+def _validate_roast_pack_tree(pack_dir: Path, reporter: Reporter) -> None:
+    """共享文案包不包含图片，只允许 manifest、正文和可选说明文件。"""
+
+    if not pack_dir.is_dir():
+        reporter.error(pack_dir, "共享文案包目录不存在")
+        return
+    allowed_root_names = {"manifest.json", "roast_library.json", "README.md"}
+    for path in pack_dir.rglob("*"):
+        if path.is_symlink():
+            reporter.error(path, "共享文案包中禁止使用符号链接")
+    for path in pack_dir.iterdir():
+        if path.name not in allowed_root_names:
+            reporter.error(path, "共享文案包根目录含未登记文件或目录")
+
+
+def _validate_roast_manifest_header(
+    path: Path,
+    manifest: dict[str, Any] | None,
+    reporter: Reporter,
+) -> str:
+    """校验共享文案 manifest 头部，不套用图片 Overlay 的字段规则。"""
+
+    if manifest is None:
+        return ""
+    if manifest.get("schema_version") != 1:
+        reporter.error(path, "schema_version 当前只能为 1")
+    if manifest.get("package_type") != "roast_library":
+        reporter.error(path, "package_type 必须为 'roast_library'")
+
+    version = manifest.get("resource_version")
+    if not isinstance(version, str) or ROAST_VERSION_PATTERN.fullmatch(version) is None:
+        reporter.error(path, "resource_version 必须使用 roasts-YYYY-MM-DD.N 格式")
+        version = ""
+
+    min_plugin_version = manifest.get("min_plugin_version")
+    if not isinstance(min_plugin_version, str) or not min_plugin_version.strip():
+        reporter.error(path, "min_plugin_version 必须是非空字符串")
+
+    created_at = manifest.get("created_at")
+    if not isinstance(created_at, str) or not created_at.strip():
+        reporter.error(path, "created_at 必须是带时区的 ISO 8601 时间")
+    else:
+        try:
+            parsed = dt.datetime.fromisoformat(created_at.replace("Z", "+00:00"))
+            if parsed.tzinfo is None:
+                reporter.error(path, "created_at 必须包含时区")
+        except ValueError:
+            reporter.error(path, f"created_at 不是有效 ISO 8601 时间: {created_at}")
+
+    unknown_fields = sorted(
+        set(manifest)
+        - {
+            "schema_version",
+            "package_type",
+            "resource_version",
+            "min_plugin_version",
+            "roast_library",
+            "statistics",
+            "created_at",
+        }
+    )
+    if unknown_fields:
+        reporter.error(path, f"manifest 含未支持字段: {', '.join(unknown_fields)}")
+    return str(version or "")
+
+
+def _validate_roast_exclusions(
+    path: Path,
+    library: dict[str, Any],
+    reporter: Reporter,
+    *,
+    exclusion_hashes: set[str],
+) -> None:
+    """私有 ID 可以发布；这里只阻止长期撤回正文被后续导出重新带回。"""
+
+    for origin_id, targets in library.items():
+        if not isinstance(targets, dict):
+            continue
+        for target_id, texts in targets.items():
+            if not isinstance(target_id, str) or not isinstance(texts, list):
+                continue
+            for index, text in enumerate(texts):
+                if isinstance(text, str) and roast_text_identity(text) in exclusion_hashes:
+                    reporter.error(path, f"文案命中长期排除表: {origin_id}/{target_id}[{index}]")
+
+
+def _validate_roast_pack(
+    repo_root: Path,
+    reporter: Reporter,
+) -> RoastPackState:
+    """校验共享烤猪文案包的结构、哈希、统计、安全规则与资源引用。"""
+
+    pack_dir = repo_root / "rollpig-roasts"
+    manifest_path = pack_dir / "manifest.json"
+    library_path = pack_dir / "roast_library.json"
+    state = RoastPackState()
+    _validate_roast_pack_tree(pack_dir, reporter)
+
+    manifest = _read_json(manifest_path, reporter, expected_type=dict, max_size=64 * 1024)
+    state.version = _validate_roast_manifest_header(manifest_path, manifest, reporter)
+    library = _read_json(
+        library_path,
+        reporter,
+        expected_type=dict,
+        max_size=ROAST_LIBRARY_MAX_SIZE,
+    )
+    if not isinstance(manifest, dict) or not isinstance(library, dict):
+        return state
+
+    referenced_paths: set[str] = set()
+    _, actual_size = _validate_file_meta(
+        pack_dir=pack_dir,
+        manifest_path=manifest_path,
+        meta=manifest.get("roast_library"),
+        label="roast_library",
+        expected_path="roast_library.json",
+        reporter=reporter,
+        referenced_paths=referenced_paths,
+        max_size=ROAST_LIBRARY_MAX_SIZE,
+    )
+    state.manifest_bytes = actual_size
+
+    library_errors = validate_roast_library_data(library)
+    for error in library_errors:
+        reporter.error(library_path, error)
+
+    state.origin_count = len(library)
+    state.pair_count = sum(len(targets) for targets in library.values() if isinstance(targets, dict))
+    state.text_count = sum(
+        len(texts)
+        for targets in library.values()
+        if isinstance(targets, dict)
+        for texts in targets.values()
+        if isinstance(texts, list)
+    )
+    expected_statistics = {
+        "origin_count": state.origin_count,
+        "pair_count": state.pair_count,
+        "text_count": state.text_count,
+    }
+    if manifest.get("statistics") != expected_statistics:
+        reporter.error(
+            manifest_path,
+            f"statistics 与正文不一致: manifest={manifest.get('statistics')!r}, actual={expected_statistics!r}",
+        )
+
+    try:
+        exclusion_hashes = _load_exclusion_hashes(repo_root / "tools" / "roast_library_exclusions.json")
+    except (OSError, ValueError) as error:
+        reporter.error(repo_root / "tools" / "roast_library_exclusions.json", str(error))
+        exclusion_hashes = set()
+    _validate_roast_exclusions(
+        library_path,
+        library,
+        reporter,
+        exclusion_hashes=exclusion_hashes,
+    )
+    return state
+
+
 def _validate_manifest_files(
     *,
     state: PackState,
@@ -787,6 +972,40 @@ def _validate_history(
                 )
 
 
+def _validate_roast_history(
+    repo_root: Path,
+    reporter: Reporter,
+    state: RoastPackState,
+    base_ref: str,
+) -> None:
+    """共享文案允许增删，但正文变化时必须提升独立资源版本。"""
+
+    resolved = _git(repo_root, ["rev-parse", "--verify", f"{base_ref}^{{commit}}"])
+    if resolved.returncode != 0:
+        return
+    revision = resolved.stdout.decode("ascii").strip()
+    old_manifest = _json_from_git(repo_root, revision, "rollpig-roasts/manifest.json")
+    if not isinstance(old_manifest, dict):
+        return
+
+    diff = _git(repo_root, ["diff", "--name-only", "--no-renames", revision, "--", "rollpig-roasts"])
+    if diff.returncode != 0:
+        reporter.error("rollpig-roasts/manifest.json", f"无法读取相对 {base_ref} 的共享文案差异")
+        return
+    changed_paths = {
+        line.strip()
+        for line in diff.stdout.decode("utf-8", errors="replace").splitlines()
+        if line.strip() and line.strip() != "rollpig-roasts/README.md"
+    }
+    old_version = old_manifest.get("resource_version")
+    if changed_paths and isinstance(old_version, str) and old_version == state.version:
+        samples = ", ".join(sorted(changed_paths)[:5])
+        reporter.error(
+            "rollpig-roasts/manifest.json",
+            f"共享文案已变化但 resource_version 仍为 {state.version!r}: {samples}",
+        )
+
+
 # ================================ 命令行入口 ================================ #
 
 
@@ -850,8 +1069,11 @@ def main() -> int:
         states.append(state)
         cumulative_ids.update(state.pig_ids)
 
+    roast_state = _validate_roast_pack(repo_root, reporter)
+
     if args.base_ref:
         _validate_history(repo_root, reporter, states, args.base_ref)
+        _validate_roast_history(repo_root, reporter, roast_state, args.base_ref)
 
     for state in states:
         print(
@@ -859,9 +1081,14 @@ def main() -> int:
             f"pigs={len(state.pig_ids)} images={state.image_count} gifs={state.gif_count} "
             f"payload={state.manifest_bytes}B"
         )
+    print(
+        f"checked rollpig-roasts: version={roast_state.version or '(invalid)'} "
+        f"origins={roast_state.origin_count} pairs={roast_state.pair_count} "
+        f"texts={roast_state.text_count} payload={roast_state.manifest_bytes}B"
+    )
     reporter.emit()
     print(
-        f"resource validation finished: packs={len(states)} pigs={len(cumulative_ids)} "
+        f"resource validation finished: packs={len(states) + 1} pigs={len(cumulative_ids)} "
         f"errors={reporter.error_count} warnings={reporter.warning_count}"
     )
     if reporter.error_count or (args.strict_warnings and reporter.warning_count):
