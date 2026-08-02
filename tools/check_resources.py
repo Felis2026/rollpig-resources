@@ -40,15 +40,20 @@ RULE_KEYS = (
     "roast_excluded_pigs",
 )
 TEXT_FIELDS = ("name", "description", "analysis")
+EX_LEVEL_KEYS = {str(level) for level in range(1, 6)}
+EX_VARIANT_SUFFIXES = {".png", ".gif"}
 
 # 这些上限与 RollPig Plus 的下载和渲染保护保持一致。这里提前拒绝，
 # 避免一个能合并、却必然被客户端拒绝或导致 GIF 解码峰值过高的资源包进入生产。
 MANIFEST_MAX_SIZE = 1 * 1024 * 1024
 PIG_JSON_MAX_SIZE = 2 * 1024 * 1024
 RULES_JSON_MAX_SIZE = 256 * 1024
+EX_VARIANTS_JSON_MAX_SIZE = 512 * 1024
 FILE_MAX_SIZE = 10 * 1024 * 1024
 PACKAGE_MAX_SIZE = 128 * 1024 * 1024
 PACKAGE_MAX_IMAGES = 500
+PACKAGE_MAX_EX_VARIANTS = 500
+PACKAGE_MAX_VARIANT_IMAGES = 500
 PACKAGE_MAX_FILES = 700
 GIF_MAX_SOURCE_FRAMES = 600
 GIF_MAX_DECODE_WORK_PIXELS = 16_000_000
@@ -86,6 +91,7 @@ class PackState:
     pig_ids: set[str] = field(default_factory=set)
     override_ids: set[str] = field(default_factory=set)
     image_count: int = 0
+    variant_count: int = 0
     gif_count: int = 0
     manifest_bytes: int = 0
 
@@ -313,6 +319,112 @@ def _validate_rules(
                 reporter.error(path, f"{key} 指向不存在的小猪 ID: {value}")
 
 
+# ================================ EX等级差分校验 ================================ #
+# 差分只能覆盖展示图片与文案，不得成为新猪或改变规则；首版仅公有全量包支持。
+
+
+def _validate_ex_variant_filename(
+    filename: Any,
+    *,
+    pig_id: str,
+    level: int,
+) -> bool:
+    if not isinstance(filename, str) or not filename or Path(filename).name != filename or "\\" in filename:
+        return False
+    path = Path(filename)
+    return path.suffix in EX_VARIANT_SUFFIXES and path.stem == f"{pig_id}_ex{level}"
+
+
+def _validate_ex_variants(
+    path: Path,
+    data: Any,
+    reporter: Reporter,
+    *,
+    available_ids: set[str],
+    allow_variants: bool,
+) -> dict[tuple[str, int], str | None]:
+    """校验差分 JSON，返回全部等级及其可选图片文件名。"""
+
+    if data is None:
+        return {}
+    if not allow_variants:
+        reporter.error(path, "首版仅公有 rollpig 包允许提供 EX 等级差分")
+    if not isinstance(data, dict):
+        return {}
+    if data.get("schema_version") != 1:
+        reporter.error(path, "schema_version 当前只能为 1")
+    unknown_root_fields = sorted(set(data) - {"schema_version", "pigs"})
+    if unknown_root_fields:
+        reporter.error(path, f"差分 JSON 含未支持字段: {', '.join(unknown_root_fields)}")
+
+    raw_pigs = data.get("pigs")
+    if not isinstance(raw_pigs, dict):
+        reporter.error(path, "pigs 必须是 JSON object")
+        return {}
+
+    variants: dict[tuple[str, int], str | None] = {}
+    for raw_pig_id, raw_pig in raw_pigs.items():
+        pig_id = str(raw_pig_id)
+        if not _valid_pig_id(pig_id) or pig_id not in available_ids:
+            reporter.error(path, f"差分指向不存在或非法的小猪 ID: {pig_id}")
+            continue
+        if not isinstance(raw_pig, dict):
+            reporter.error(path, f"差分猪条目必须是 object: {pig_id}")
+            continue
+        unknown_pig_fields = sorted(set(raw_pig) - {"levels"})
+        if unknown_pig_fields:
+            reporter.error(path, f"差分猪 {pig_id} 含未支持字段: {', '.join(unknown_pig_fields)}")
+
+        raw_levels = raw_pig.get("levels")
+        if not isinstance(raw_levels, dict) or not raw_levels:
+            reporter.error(path, f"差分猪 {pig_id}.levels 必须是非空 object")
+            continue
+        for raw_level, raw_variant in raw_levels.items():
+            if not isinstance(raw_level, str) or raw_level not in EX_LEVEL_KEYS:
+                reporter.error(path, f"差分等级非法: {pig_id}/{raw_level}")
+                continue
+            level = int(raw_level)
+            if not isinstance(raw_variant, dict):
+                reporter.error(path, f"差分等级条目必须是 object: {pig_id}/EX{level}")
+                continue
+            unknown_variant_fields = sorted(set(raw_variant) - {"image", "description", "analysis"})
+            if unknown_variant_fields:
+                reporter.error(
+                    path,
+                    f"差分 {pig_id}/EX{level} 含未支持字段: {', '.join(unknown_variant_fields)}",
+                )
+
+            supported_fields = {"image", "description", "analysis"}
+            if not set(raw_variant) & supported_fields:
+                reporter.error(path, f"差分 {pig_id}/EX{level} 至少需要 image、description、analysis 之一")
+                continue
+
+            filename: str | None = None
+            if "image" in raw_variant:
+                raw_filename = raw_variant.get("image")
+                if not _validate_ex_variant_filename(raw_filename, pig_id=pig_id, level=level):
+                    reporter.error(path, f"差分图片必须命名为 {pig_id}_ex{level}.png 或 .gif")
+                    continue
+                filename = str(raw_filename)
+            for field in ("description", "analysis"):
+                if field in raw_variant:
+                    value = raw_variant[field]
+                    if not isinstance(value, str) or not value.strip():
+                        reporter.error(path, f"差分 {pig_id}/EX{level}.{field} 必须是非空字符串或省略")
+
+            key = (pig_id, level)
+            if key in variants:
+                reporter.error(path, f"差分等级重复: {pig_id}/EX{level}")
+            variants[key] = filename
+
+    if len(variants) > PACKAGE_MAX_EX_VARIANTS:
+        reporter.error(
+            path,
+            f"差分条目数量 {len(variants)} 超过上限 {PACKAGE_MAX_EX_VARIANTS}",
+        )
+    return variants
+
+
 # ================================ Manifest与图片校验 ================================ #
 
 
@@ -518,6 +630,7 @@ def _validate_pack_tree(pack_dir: Path, reporter: Reporter) -> None:
         "pig.json",
         "pig_rules.json",
         "pig_overrides.json",
+        "pig_ex_variants.json",
         "README.md",
         "images",
     }
@@ -694,6 +807,7 @@ def _validate_manifest_files(
     state: PackState,
     pack_dir: Path,
     manifest: dict[str, Any] | None,
+    variant_specs: dict[tuple[str, int], str | None],
     reporter: Reporter,
     decode_images: bool,
 ) -> None:
@@ -723,11 +837,16 @@ def _validate_manifest_files(
     if not isinstance(optional_files, dict):
         reporter.error(manifest_path, "optional_files 必须是 JSON object")
         optional_files = {}
-    unknown_optional = sorted(set(optional_files) - {"pig_rules", "pig_overrides"})
+    unknown_optional = sorted(set(optional_files) - {"pig_rules", "pig_overrides", "pig_ex_variants"})
     if unknown_optional:
         reporter.error(manifest_path, f"optional_files 含未支持条目: {', '.join(unknown_optional)}")
 
-    for key, filename in (("pig_rules", "pig_rules.json"), ("pig_overrides", "pig_overrides.json")):
+    optional_specs = (
+        ("pig_rules", "pig_rules.json", RULES_JSON_MAX_SIZE),
+        ("pig_overrides", "pig_overrides.json", RULES_JSON_MAX_SIZE),
+        ("pig_ex_variants", "pig_ex_variants.json", EX_VARIANTS_JSON_MAX_SIZE),
+    )
+    for key, filename, max_size in optional_specs:
         file_path = pack_dir / filename
         meta = optional_files.get(key)
         if meta is None:
@@ -736,6 +855,8 @@ def _validate_manifest_files(
             continue
         if key == "pig_overrides" and not state.spec.overlay:
             reporter.error(manifest_path, "公有包不能声明 pig_overrides")
+        if key == "pig_ex_variants" and state.spec.overlay:
+            reporter.error(manifest_path, "首版私有 Overlay 不能声明 pig_ex_variants")
         _, actual_size = _validate_file_meta(
             pack_dir=pack_dir,
             manifest_path=manifest_path,
@@ -744,7 +865,7 @@ def _validate_manifest_files(
             expected_path=filename,
             reporter=reporter,
             referenced_paths=referenced_paths,
-            max_size=RULES_JSON_MAX_SIZE,
+            max_size=max_size,
         )
         total_bytes += actual_size
         total_files += 1
@@ -806,6 +927,80 @@ def _validate_manifest_files(
     if missing_images:
         reporter.error(manifest_path, f"以下小猪没有 manifest 图片条目: {', '.join(missing_images[:20])}")
 
+    # ================================ 差分图片清单 ================================ #
+
+    variant_items = manifest.get("variant_images", [])
+    if not isinstance(variant_items, list):
+        reporter.error(manifest_path, "variant_images 必须是 list")
+        variant_items = []
+    if state.spec.overlay and "variant_images" in manifest:
+        reporter.error(manifest_path, "首版私有 Overlay 不能声明 variant_images")
+    if len(variant_items) > PACKAGE_MAX_VARIANT_IMAGES:
+        reporter.error(
+            manifest_path,
+            f"variant_images 条目数 {len(variant_items)} 超过上限 {PACKAGE_MAX_VARIANT_IMAGES}",
+        )
+
+    manifest_variant_keys: set[tuple[str, int]] = set()
+    manifest_variant_paths: set[str] = set()
+    image_variant_specs = {key: filename for key, filename in variant_specs.items() if filename is not None}
+    allowed_variant_fields = {"pig_id", "level", "filename", "path", "size", "sha256"}
+    for index, item in enumerate(variant_items):
+        label = f"variant_images[{index}]"
+        if not isinstance(item, dict):
+            reporter.error(manifest_path, f"{label} 必须是 JSON object")
+            continue
+        unknown_fields = sorted(set(item) - allowed_variant_fields)
+        if unknown_fields:
+            reporter.error(manifest_path, f"{label} 含未支持字段: {', '.join(unknown_fields)}")
+
+        pig_id = item.get("pig_id")
+        raw_level = item.get("level")
+        filename = item.get("filename")
+        if not _valid_pig_id(pig_id):
+            reporter.error(manifest_path, f"{label}.pig_id 非法: {pig_id!r}")
+            continue
+        if isinstance(raw_level, bool) or not isinstance(raw_level, int) or not 1 <= raw_level <= 5:
+            reporter.error(manifest_path, f"{label}.level 必须是 1～5 的整数")
+            continue
+        level = int(raw_level)
+        if not _validate_ex_variant_filename(filename, pig_id=pig_id, level=level):
+            reporter.error(manifest_path, f"{label}.filename 与猪 ID/等级不一致")
+            continue
+
+        key = (pig_id, level)
+        if key in manifest_variant_keys:
+            reporter.error(manifest_path, f"variant_images 重复列出: {pig_id}/EX{level}")
+        manifest_variant_keys.add(key)
+        if image_variant_specs.get(key) != filename:
+            reporter.error(manifest_path, f"{label} 未与 pig_ex_variants.json 对应")
+
+        expected_path = f"images/{filename}"
+        image_path, actual_size = _validate_file_meta(
+            pack_dir=pack_dir,
+            manifest_path=manifest_path,
+            meta=item,
+            label=label,
+            expected_path=expected_path,
+            reporter=reporter,
+            referenced_paths=referenced_paths,
+            max_size=FILE_MAX_SIZE,
+        )
+        manifest_variant_paths.add(expected_path)
+        total_bytes += actual_size
+        total_files += 1
+        if Path(filename).suffix == ".gif":
+            state.gif_count += 1
+        if image_path is not None and decode_images:
+            _validate_image_content(image_path, reporter)
+
+    missing_variant_entries = sorted(set(image_variant_specs) - manifest_variant_keys)
+    for pig_id, level in missing_variant_entries[:20]:
+        reporter.error(manifest_path, f"差分 JSON 引用的图片未写入 manifest: {pig_id}/EX{level}")
+    extra_variant_entries = sorted(manifest_variant_keys - set(image_variant_specs))
+    for pig_id, level in extra_variant_entries[:20]:
+        reporter.error(manifest_path, f"manifest 含未被差分 JSON 引用的图片: {pig_id}/EX{level}")
+
     images_dir = pack_dir / "images"
     physical_image_paths: set[str] = set()
     if not images_dir.is_dir():
@@ -818,15 +1013,18 @@ def _validate_manifest_files(
                     reporter.error(path, "images 目录不允许再嵌套子目录")
                 continue
             physical_image_paths.add(relative_path)
-            if path.suffix.lower() not in state.spec.allowed_image_suffixes:
+            allowed_suffixes = EX_VARIANT_SUFFIXES if relative_path in manifest_variant_paths else state.spec.allowed_image_suffixes
+            if path.suffix.lower() not in allowed_suffixes:
                 reporter.error(path, f"图片后缀不受该资源包支持: {path.suffix or '(空)'}")
 
-    for extra_path in sorted(physical_image_paths - manifest_image_paths):
+    all_manifest_image_paths = manifest_image_paths | manifest_variant_paths
+    for extra_path in sorted(physical_image_paths - all_manifest_image_paths):
         reporter.error(pack_dir / extra_path, "图片文件存在但未写入 manifest")
-    for missing_path in sorted(manifest_image_paths - physical_image_paths):
+    for missing_path in sorted(all_manifest_image_paths - physical_image_paths):
         reporter.error(pack_dir / missing_path, "manifest 图片条目没有对应实体文件")
 
     state.image_count = len(image_items)
+    state.variant_count = len(variant_specs)
     state.manifest_bytes = total_bytes
     if total_files > PACKAGE_MAX_FILES:
         reporter.error(manifest_path, f"资源文件数 {total_files} 超过上限 {PACKAGE_MAX_FILES}")
@@ -851,6 +1049,7 @@ def _validate_pack(
     pig_path = pack_dir / "pig.json"
     rules_path = pack_dir / "pig_rules.json"
     overrides_path = pack_dir / "pig_overrides.json"
+    variants_path = pack_dir / "pig_ex_variants.json"
     manifest_path = pack_dir / "manifest.json"
 
     pigs = _read_json(pig_path, reporter, expected_type=list, max_size=PIG_JSON_MAX_SIZE)
@@ -868,6 +1067,21 @@ def _validate_pack(
     rules = _read_json(rules_path, reporter, expected_type=dict, required=False, max_size=RULES_JSON_MAX_SIZE)
     _validate_rules(rules_path, rules, reporter, available_ids=prior_ids | state.pig_ids)
 
+    variants = _read_json(
+        variants_path,
+        reporter,
+        expected_type=dict,
+        required=False,
+        max_size=EX_VARIANTS_JSON_MAX_SIZE,
+    )
+    variant_specs = _validate_ex_variants(
+        variants_path,
+        variants,
+        reporter,
+        available_ids=state.pig_ids,
+        allow_variants=not spec.overlay,
+    )
+
     manifest = _read_json(manifest_path, reporter, expected_type=dict, max_size=MANIFEST_MAX_SIZE)
     state.version = _validate_manifest_header(
         manifest_path,
@@ -880,6 +1094,7 @@ def _validate_pack(
         state=state,
         pack_dir=pack_dir,
         manifest=manifest,
+        variant_specs=variant_specs,
         reporter=reporter,
         decode_images=decode_images,
     )
@@ -1078,7 +1293,8 @@ def main() -> int:
     for state in states:
         print(
             f"checked {state.spec.name}: version={state.version or '(invalid)'} "
-            f"pigs={len(state.pig_ids)} images={state.image_count} gifs={state.gif_count} "
+            f"pigs={len(state.pig_ids)} images={state.image_count} "
+            f"variants={state.variant_count} gifs={state.gif_count} "
             f"payload={state.manifest_bytes}B"
         )
     print(

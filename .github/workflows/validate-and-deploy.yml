@@ -102,6 +102,11 @@ jobs:
             echo "Skip deployment: $GITHUB_SHA has been superseded by $latest_main"
           fi
 
+      - uses: actions/setup-python@v6
+        if: steps.revision.outputs.current == 'true'
+        with:
+          python-version: "3.11"
+
       - name: Validate deployment settings
         if: steps.revision.outputs.current == 'true'
         shell: bash
@@ -184,7 +189,7 @@ jobs:
             "$DEPLOY_USER@$DEPLOY_HOST" \
             "sh '$REMOTE_SCRIPT' '$REMOTE_ARCHIVE' '$GITHUB_SHA' '$ARCHIVE_SHA256' '$DEPLOY_ROOT' '$DEPLOY_PUBLIC_BASE_URL'"
 
-      - name: Verify public manifests from runner
+      - name: Verify public manifests and EX variant samples
         if: steps.revision.outputs.current == 'true'
         shell: bash
         run: |
@@ -197,6 +202,39 @@ jobs:
               -o "$downloaded_manifest"
             cmp "$package/manifest.json" "$downloaded_manifest"
           done
+
+          checks_file="$RUNNER_TEMP/ex-variant-checks.tsv"
+          python - <<'PY' > "$checks_file"
+          import json
+          from pathlib import Path
+
+          for package in ("rollpig", "rollpig-gif", "rollpig-pjsk"):
+              manifest = json.loads(Path(package, "manifest.json").read_text(encoding="utf-8"))
+              optional_files = manifest.get("optional_files") or {}
+              variants_meta = optional_files.get("pig_ex_variants")
+              if not isinstance(variants_meta, dict):
+                  continue
+
+              print(package, variants_meta["path"], variants_meta["sha256"], sep="\t")
+              variant_images = manifest.get("variant_images") or []
+              if len(variant_images) <= 3:
+                  samples = variant_images
+              else:
+                  samples = [variant_images[0], variant_images[len(variant_images) // 2], variant_images[-1]]
+              for item in samples:
+                  print(package, item["path"], item["sha256"], sep="\t")
+          PY
+
+          sample_index=0
+          while IFS=$'\t' read -r package path expected_sha256; do
+            sample_index=$((sample_index + 1))
+            downloaded_file="$RUNNER_TEMP/ex-variant-$sample_index"
+            curl --fail --silent --show-error --location \
+              --max-time 20 --retry 5 --retry-delay 3 \
+              "$DEPLOY_PUBLIC_BASE_URL/$package/$path?revision=$GITHUB_SHA" \
+              -o "$downloaded_file"
+            printf '%s  %s\n' "$expected_sha256" "$downloaded_file" | sha256sum --check --status
+          done < "$checks_file"
 
       - name: Remove remote temporary script
         if: always() && steps.revision.outputs.current == 'true'

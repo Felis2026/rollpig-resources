@@ -9,7 +9,7 @@ Pull Request / push
         ↓（仅 main，含手动运行 main）
 生成归档并计算 SHA256 → 通过已知主机密钥校验的 SSH 上传
         ↓
-逐个原子替换四个资源包 → 公网 manifest 比对 → 成功或自动回滚
+逐个原子替换四个资源包 → 公网 manifest 与 EX 差分抽样比对 → 成功或自动回滚
 ```
 
 ## 触发规则
@@ -42,7 +42,7 @@ ROLLPIG_DEPLOY_KNOWN_HOSTS
 ROLLPIG_RESOURCE_PUBLIC_BASE_URL=https://pig.felislab.cc/resources
 ```
 
-不设置时工作流使用上面的默认地址。`ROLLPIG_DEPLOY_ROOT` 应指向 Cloud 项目根目录；其下必须已经存在 `static/resources/`。服务器还需具备 `tar`、`sha256sum`、`curl`、`cmp`、`find`、`sort` 和 `awk`。
+不设置时工作流使用上面的默认地址。`ROLLPIG_DEPLOY_ROOT` 应指向 Cloud 项目根目录；其下必须已经存在 `static/resources/`。服务器还需具备 `tar`、`sha256sum`、`curl`、`cmp`、`find`、`sort`、`awk` 和 `python3`。
 
 建议在 `production` Environment 中只允许 `main` 部署；如希望每次发布前人工确认，可再启用 Required reviewers。
 
@@ -54,6 +54,7 @@ ROLLPIG_RESOURCE_PUBLIC_BASE_URL=https://pig.felislab.cc/resources
 - 小猪 ID 非法、包内或包间重复、已发布 ID 被删除或迁移到其他包。
 - 文案必填字段为空，规则或覆盖项指向不存在的 ID。
 - 图片缺失、损坏、未登记、manifest 大小或 SHA256 不一致。
+- EX 差分 schema、等级、文件名、JSON / manifest / 实体图片对应关系或 Overlay 使用范围不符合协议。
 - 共享烤猪文案的结构、占位符、隐私扫描、统计、长期排除表或正文 SHA256 不一致。
 - 资源包超过 RollPig Plus 的文件数、字节数、单文件或 GIF 解码预算。
 - 资源内容改变但 `resource_version` 没有提升。
@@ -102,7 +103,7 @@ python tools/build_roast_library.py `
 
 部署包只包含 `rollpig/`、`rollpig-gif/`、`rollpig-pjsk/` 和 `rollpig-roasts/`，不会上传 Cloud 代码、Compose、数据库文件或任何私密手册。
 
-服务器不会替换 `static/resources` 挂载根目录，而是逐个原子替换它下面的四个资源包。切换后会带本次 commit SHA 请求公网 manifest，并与服务器新文件逐字节比较；任一包失败就恢复本次发布前的四个目录。成功后保留最近 5 个回滚点：
+服务器不会替换 `static/resources` 挂载根目录，而是逐个原子替换它下面的四个资源包。切换后会带本次 commit SHA 请求公网 manifest，并与服务器新文件逐字节比较；若公有包带 EX 差分，还会校验差分 JSON 以及首、中、末抽样图片的 SHA256。任一步失败都会恢复本次发布前的四个目录。GitHub Runner 随后再从独立网络重复核对 manifest 与差分抽样；成功后保留最近 5 个回滚点：
 
 ```text
 <ROLLPIG_DEPLOY_ROOT>/.deploy/resources/backup/<commit SHA>/

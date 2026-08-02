@@ -41,7 +41,7 @@ case "$public_base_url" in
         ;;
 esac
 
-for command_name in sha256sum tar find curl cmp sort awk; do
+for command_name in sha256sum tar find curl cmp sort awk python3; do
     if ! command -v "$command_name" >/dev/null 2>&1; then
         echo "required deployment command is missing: $command_name" >&2
         exit 2
@@ -152,6 +152,79 @@ for package in $packages; do
     fi
     rm -f "$verified_manifest"
 done
+
+# ================================ EX差分公网抽样 ================================ #
+# manifest 本身一致仍不足以证明新增静态文件可访问；在备份清理前校验差分 JSON，
+# 并固定抽取首、中、末三张差分图，失败时沿用同一回滚路径。
+variant_checks="$deploy_root/variant-checks-$revision.txt"
+if ! python3 - "$resource_root/rollpig/manifest.json" > "$variant_checks" <<'PY'
+import json
+import re
+import sys
+from pathlib import Path, PurePosixPath
+
+
+manifest = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
+optional_files = manifest.get("optional_files") or {}
+variants_meta = optional_files.get("pig_ex_variants") if isinstance(optional_files, dict) else None
+
+
+def emit(meta: object) -> None:
+    if not isinstance(meta, dict):
+        raise ValueError("EX variant manifest entry must be an object")
+    relative_path = meta.get("path")
+    sha256 = meta.get("sha256")
+    if not isinstance(relative_path, str) or not relative_path or any(char.isspace() for char in relative_path):
+        raise ValueError("EX variant path is invalid")
+    pure_path = PurePosixPath(relative_path)
+    if pure_path.is_absolute() or any(part in {"", ".", ".."} for part in pure_path.parts):
+        raise ValueError("EX variant path is unsafe")
+    if not isinstance(sha256, str) or re.fullmatch(r"[0-9a-f]{64}", sha256) is None:
+        raise ValueError("EX variant sha256 is invalid")
+    print(relative_path, sha256)
+
+
+if variants_meta is not None:
+    emit(variants_meta)
+    variant_images = manifest.get("variant_images") or []
+    if not isinstance(variant_images, list):
+        raise ValueError("variant_images must be a list")
+    if len(variant_images) <= 3:
+        samples = variant_images
+    else:
+        samples = [variant_images[0], variant_images[len(variant_images) // 2], variant_images[-1]]
+    for item in samples:
+        emit(item)
+PY
+then
+    rollback_resources
+    exit 1
+fi
+
+sample_number=0
+while read -r relative_path expected_sha256; do
+    if [ -z "$relative_path" ]; then
+        continue
+    fi
+    sample_number=$((sample_number + 1))
+    verified_asset="$deploy_root/verified-$revision-variant-$sample_number"
+    if ! curl --fail --silent --show-error --location \
+        --max-time 20 --retry 3 --retry-delay 2 \
+        "${public_base_url%/}/rollpig/$relative_path?revision=$revision" \
+        -o "$verified_asset"; then
+        rollback_resources
+        exit 1
+    fi
+    actual_sha256=$(sha256sum "$verified_asset" | awk '{print $1}')
+    if [ "$actual_sha256" != "$expected_sha256" ]; then
+        echo "public EX variant asset checksum mismatch: $relative_path" >&2
+        rm -f "$verified_asset"
+        rollback_resources
+        exit 1
+    fi
+    rm -f "$verified_asset"
+done < "$variant_checks"
+rm -f "$variant_checks"
 
 # ================================ 成功清理与备份保留 ================================ #
 

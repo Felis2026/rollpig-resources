@@ -41,7 +41,8 @@ rollpig-resources/
 │  ├─ manifest.json          # 资源清单，包含版本号、文件大小与 sha256
 │  ├─ pig.json               # 小猪基础数据
 │  ├─ pig_rules.json         # 可选规则元数据
-│  └─ images/                # 小猪图片，文件名与 pig id 对应
+│  ├─ pig_ex_variants.json   # 可选，EX 等级立绘与文案差分
+│  └─ images/                # 基础图片与可选等级差分图片
 ├─ rollpig-pjsk/             # PJSK Bot 专用 Overlay
 │  ├─ manifest.json
 │  ├─ pig.json               # 只放 Overlay 新增小猪
@@ -143,6 +144,37 @@ GIF Overlay 约定：
 
 不支持这些规则的插件版本会忽略该文件；RollPig Plus 会读取并合并内置规则、云端公有规则与 Overlay 规则。
 
+### `pig_ex_variants.json`
+
+`pig_ex_variants.json` 为 RollPig Plus `0.10.0+` 提供同一只猪的 EX 等级立绘与文案差分。差分不会新增图鉴条目，也不会修改小猪 ID、名称、抽取规则或用户数据。
+
+```json
+{
+  "schema_version": 1,
+  "pigs": {
+    "coder-pig": {
+      "levels": {
+        "2": {
+          "image": "coder-pig_ex2.png",
+          "description": "开始熟练维护猪联网。"
+        },
+        "5": {
+          "description": "已经能从容处理整套猪联网。",
+          "analysis": "服务稳定了，咖啡终于也能趁热喝完。"
+        }
+      }
+    }
+  }
+}
+```
+
+- `schema_version` 当前固定为 `1`，用于标识这份差分文件遵循第一版结构。
+- 等级键只允许字符串 `"1"`～`"5"`；每档必须至少提供 `image`、`description`、`analysis` 之一，空差分会被拒绝。
+- 图片和两类文案分别按等级继承：当前档缺少某字段时，使用较低等级最近一次提供的值，仍未提供时才使用基础 `pig.json` 或基础图片。
+- 只有声明图片的等级才写入 `variant_images`；图片必须命名为 `<pig_id>_ex<level>.png` 或 `.gif`，并与清单中的大小和 SHA256 一一对应。
+- 首版只允许公有 `rollpig/` 全量包提供差分，私有 Overlay 暂不提供差分覆盖。
+- 基础 `pig.json` 和基础图片必须继续保留。旧 Plus 与原版 RollPig 会忽略新字段并正常同步基础资源。
+
 ### `manifest.json`
 
 `manifest.json` 是资源同步入口，包含：
@@ -152,6 +184,7 @@ GIF Overlay 约定：
 - `pig_json`
 - `optional_files`
 - `images`
+- 可选的 `variant_images`
 - 每个文件的 `size` 与 `sha256`
 
 插件会根据 manifest 下载并校验资源，校验失败时回退旧缓存或插件内置资源。
@@ -212,7 +245,7 @@ RollPig Plus `0.8.2+` 推荐配置示例：
 python tools/check_resources.py --base-ref origin/main
 ```
 
-仓库工作流会在 Pull Request 中只做校验；推送到 `main` 后，校验通过才会把三个资源包原子发布到 Cloud 静态目录。发布失败或公网 manifest 与本次文件不一致时会自动恢复旧资源，Cloud 服务无需重启。
+仓库工作流会在 Pull Request 中只做校验；推送到 `main` 后，校验通过才会把四个资源包原子发布到 Cloud 静态目录，并额外核对差分 JSON 与抽样图片。发布失败或公网 manifest 与本次文件不一致时会自动恢复旧资源，Cloud 服务无需重启。
 
 首次启用所需的 GitHub Environment、Secrets 和服务器条件见 [资源自动校验与发布](docs/automated-deployment.md)。
 
