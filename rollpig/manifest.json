@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "resource_version": "2026-08-10.1",
+  "resource_version": "2026-08-20.1",
   "min_plugin_version": "0.2.0",
   "pig_json": {
     "path": "pig.json",
@@ -1407,7 +1407,78 @@
       "path": "pig_rules.json",
       "size": 562,
       "sha256": "5e3ddbc0d4b3d9da8872aa556138ea8f27624608d07173dac5d605e15ce1060f"
+    },
+    "pig_ex_variants": {
+      "path": "pig_ex_variants.json",
+      "size": 7235,
+      "sha256": "11aa1c3a5a2d7fb62ae2bab41640010003ca251559cdf0dd019ca6a6f28a4847"
     }
   },
-  "created_at": "2026-08-09T15:23:45.600595+00:00"
+  "created_at": "2026-08-10T15:35:54.209268+00:00",
+  "variant_images": [
+    {
+      "pig_id": "mechanical-pig",
+      "level": 2,
+      "filename": "mechanical-pig_ex2.png",
+      "path": "images/mechanical-pig_ex2.png",
+      "size": 97183,
+      "sha256": "2eb10b90aa5f7af4007610606f8c9da039b0c2f7f4430fe98a3b947262ef08c1"
+    },
+    {
+      "pig_id": "crystal-pig",
+      "level": 2,
+      "filename": "crystal-pig_ex2.png",
+      "path": "images/crystal-pig_ex2.png",
+      "size": 92302,
+      "sha256": "cd13f243984f16dfcb0dcf9551cc896789ce785c3084a232e2ea678006f06084"
+    },
+    {
+      "pig_id": "piggy-bank",
+      "level": 2,
+      "filename": "piggy-bank_ex2.png",
+      "path": "images/piggy-bank_ex2.png",
+      "size": 91632,
+      "sha256": "7db17d20b8b5edaa183525564098bf39dcffc7c2b0776a9aac2a5308da951c53"
+    },
+    {
+      "pig_id": "coder-pig",
+      "level": 2,
+      "filename": "coder-pig_ex2.png",
+      "path": "images/coder-pig_ex2.png",
+      "size": 135730,
+      "sha256": "1ffd98c8454f2bbebdbcc00679170d37faba450f2bc4c34635774e8139d0434b"
+    },
+    {
+      "pig_id": "sleepy-pig",
+      "level": 2,
+      "filename": "sleepy-pig_ex2.png",
+      "path": "images/sleepy-pig_ex2.png",
+      "size": 52587,
+      "sha256": "af008ad5b9bb178534eeb0c865c5bfc6369978cd1c7a7e53c1fe09a7408f4ad7"
+    },
+    {
+      "pig_id": "balloon-pig",
+      "level": 2,
+      "filename": "balloon-pig_ex2.png",
+      "path": "images/balloon-pig_ex2.png",
+      "size": 42448,
+      "sha256": "481db63b30ee876ce11312186f9ef365372b6248e880badc4523022058550bc4"
+    },
+    {
+      "pig_id": "astro-pig",
+      "level": 2,
+      "filename": "astro-pig_ex2.png",
+      "path": "images/astro-pig_ex2.png",
+      "size": 87550,
+      "sha256": "1d0ab197776c6939d1ccafde8fdcc3f770c0b3124e5df143f2edb15aa6e761bf"
+    },
+    {
+      "pig_id": "ninja-pig",
+      "level": 2,
+      "filename": "ninja-pig_ex2.png",
+      "path": "images/ninja-pig_ex2.png",
+      "size": 71864,
+      "sha256": "3f19f371baed4c0254b1ca80e2016ab263f714ff4c7886715e2f4d594e7fbf47"
+    }
+  ]
 }
