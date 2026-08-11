@@ -24,12 +24,13 @@
 
 ## 🧭 资源包定位
 
-| 资源包 | 类型 | 使用方 | 是否需要手动配置 |
-| --- | --- | --- | --- |
-| `rollpig/` | 公有全量包 | 上游原版、RollPig Plus | 否，默认资源入口 |
-| `rollpig-gif/` | 官方 GIF Overlay | RollPig Plus | 否，由 Plus 固定加载 |
-| `rollpig-pjsk/` | PJSK 专用 Overlay | RollPig Plus | 是，按需追加 |
-| `rollpig-roasts/` | 共享烤猪文案 | RollPig Plus 0.10.0+ | 否，随资源同步加载 |
+| 资源包 | 类型 | 使用方 | 推荐插件版本 | 是否需要手动配置 |
+| --- | --- | --- | --- | --- |
+| `rollpig/` | 公有全量包 | RollPig原版、RollPig Plus | 原版/Plus `0.2.0+` | 否，默认资源入口 |
+| `rollpig-gif/` | 官方 GIF Overlay | RollPig原版、RollPig Plus | Plus `0.8.2+` | 否，由 Plus 固定加载 |
+| `rollpig-pjsk/` | PJSK 专用 Overlay | RollPig Plus | Plus `0.8.2+` | 是，按需追加 |
+| `rollpig-roasts/` | 共享烤猪文案 | RollPig Plus | Plus `0.10.0+` | 否，随资源同步加载 |
+| 公有包 EX 差分 | `rollpig/pig_ex_variants.json` 可选文件 | RollPig Plus | Plus `0.10.0+` | 否，随公有包读取 |
 
 本文中的 Overlay 指在公有全量包之上追加或覆盖内容的叠加资源包。公有包保持上游兼容，GIF 与 PJSK 等增强能力主要由 RollPig Plus 使用。
 
@@ -251,7 +252,7 @@ python tools/check_resources.py --base-ref origin/main
 
 ## 🤝 如何贡献
 
-如果你绘制了新的小猪并希望合并到本仓库，欢迎提交 Pull Request！请确保你的提交符合以下规范：
+如果你绘制了新的小猪并希望合并到本仓库，欢迎提交 Pull Request！请先确认内容应进入 `rollpig/` 公有包、`rollpig-gif/` 官方 GIF 包、`rollpig-pjsk/` PJSK 包还是其它资源包，再确保提交符合以下规范：
 
 1. **图片规范**：
    - **尺寸**：强烈建议符合设定的尺寸比例（如 `240x240` 等设定）。
