@@ -1,21 +1,21 @@
-﻿# RollPig PJSK Overlay
+# RollPig PJSK 主题 Overlay
 
-这个目录是 Felis PJSK Bot 使用的专用小猪 Overlay，在公有全量包之上追加或覆盖 PJSK 专属内容。
+这个目录是在公有基础包之上追加或覆盖 PJSK 主题内容的独立 Overlay 资源包。
 
-> 该包需要配合支持多 Overlay 的 RollPig Plus 使用，并由 Bot 管理者手动追加到私有资源配置。
+> 支持 manifest 云同步、私有资源配置和**单个 Overlay 叠加**的客户端即可使用本包，不要求支持多个 Overlay。RollPig Plus 可以继续将本包与 GIF小猪 Overlay 及用户自建 Overlay 按顺序叠加；仅支持公有基础包同步的客户端不会自动加载本包。
 
 ## 文件说明
 
-- `pig.json`：只放专属新增小猪，不重复存放公有全量数据。
+- `pig.json`：只放主题新增小猪，不重复存放公有基础包数据。
 - `pig_overrides.json`：可选，按 `id` 覆盖公有小猪字段。
-- `pig_rules.json`：只放专属规则增量，与公有规则做并集。
-- `images/`：专属新增或覆盖图片。
+- `pig_rules.json`：只放主题规则增量，与公有规则做并集。
+- `images/`：主题新增或覆盖图片。
 - `manifest.json`：Overlay 发布清单，由构建脚本生成或手动维护。
 
 ## 加载与覆盖规则
 
 ```text
-插件内置资源 < 公有全量包 < PJSK 专用 Overlay
+插件内置资源 < 公有基础包 < PJSK 主题 Overlay
 ```
 
 如果 Overlay 和公有包出现相同 ID：

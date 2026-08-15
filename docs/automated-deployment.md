@@ -97,7 +97,7 @@ python tools/build_roast_library.py `
   --dry-run
 ```
 
-`--dry-run` 会在 `<review-report>/candidate-package/` 生成候选包，不会替换仓库中的正式资源。任何人都可以用它整理自己的文案，但生成候选包不代表拥有官方资源发布权限；合入本仓库前仍需人工检查拒绝项、隐私扫描结果和文案质量。
+`--dry-run` 会在 `<review-report>/candidate-package/` 生成候选包，不会替换仓库中的正式资源。任何人都可以用它整理自己的文案，但生成候选包不代表拥有本仓库资源发布权限；合入本仓库前仍需人工检查拒绝项、隐私扫描结果和文案质量。
 
 ## 发布与回滚边界
 

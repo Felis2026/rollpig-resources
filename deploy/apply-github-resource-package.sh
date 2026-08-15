@@ -9,6 +9,7 @@ expected_archive_sha256="${3:-}"
 project_dir_input="${4:-}"
 public_base_url="${5:-https://pig.felislab.cc/resources}"
 packages="rollpig rollpig-gif rollpig-pjsk rollpig-roasts"
+stats_file="stats.json"
 
 # ================================ 输入与归档校验 ================================ #
 
@@ -75,7 +76,7 @@ if grep -Eq '(^/|(^|/)\.\.(/|$)|\\)' "$archive_list"; then
     echo "deployment package contains unsafe path" >&2
     exit 2
 fi
-if grep -Ev '^(rollpig|rollpig-gif|rollpig-pjsk|rollpig-roasts)(/.*)?$' "$archive_list" >/dev/null; then
+if grep -Ev '^(stats\.json|(rollpig|rollpig-gif|rollpig-pjsk|rollpig-roasts)(/.*)?)$' "$archive_list" >/dev/null; then
     echo "deployment package contains an unexpected top-level path" >&2
     exit 2
 fi
@@ -98,6 +99,10 @@ for package in $packages; do
         fi
     done
 done
+if [ ! -f "$staging_dir/$stats_file" ]; then
+    echo "deployment package missing: $stats_file" >&2
+    exit 2
+fi
 
 # 资源目录由 Cloud 容器只读挂载；切换前统一权限，避免发布后宿主机可见、容器不可读。
 chmod -R u=rwX,go=rX "$staging_dir"
@@ -105,9 +110,16 @@ chmod -R u=rwX,go=rX "$staging_dir"
 # ================================ 原子切换与失败回滚 ================================ #
 
 switched_packages=""
+switched_stats=0
 
 rollback_resources() {
     echo "resource deployment failed, rolling back: revision=$revision" >&2
+    if [ "$switched_stats" -eq 1 ]; then
+        rm -f "${resource_root:?}/$stats_file"
+        if [ -e "$backup_dir/$stats_file" ]; then
+            mv "$backup_dir/$stats_file" "$resource_root/$stats_file"
+        fi
+    fi
     for package in $switched_packages; do
         rm -rf "${resource_root:?}/$package"
         if [ -e "$backup_dir/$package" ]; then
@@ -135,6 +147,21 @@ for package in $packages; do
     switched_packages="$package $switched_packages"
 done
 
+if [ -e "$resource_root/$stats_file" ]; then
+    if ! mv "$resource_root/$stats_file" "$backup_dir/$stats_file"; then
+        rollback_resources
+        exit 1
+    fi
+fi
+if ! mv "$staging_dir/$stats_file" "$resource_root/$stats_file"; then
+    if [ -e "$backup_dir/$stats_file" ]; then
+        mv "$backup_dir/$stats_file" "$resource_root/$stats_file"
+    fi
+    rollback_resources
+    exit 1
+fi
+switched_stats=1
+
 # 查询参数用于绕开代理缓存；公网返回必须与刚切换的 manifest 字节完全一致。
 for package in $packages; do
     verified_manifest="$deploy_root/verified-$revision-$package.json"
@@ -152,6 +179,22 @@ for package in $packages; do
     fi
     rm -f "$verified_manifest"
 done
+
+verified_stats="$deploy_root/verified-$revision-$stats_file"
+if ! curl --fail --silent --show-error --location \
+    --max-time 20 --retry 3 --retry-delay 2 \
+    "${public_base_url%/}/$stats_file?revision=$revision" \
+    -o "$verified_stats"; then
+    rollback_resources
+    exit 1
+fi
+if ! cmp -s "$resource_root/$stats_file" "$verified_stats"; then
+    echo "public stats file does not match deployed file" >&2
+    rm -f "$verified_stats"
+    rollback_resources
+    exit 1
+fi
+rm -f "$verified_stats"
 
 # ================================ EX差分公网抽样 ================================ #
 # manifest 本身一致仍不足以证明新增静态文件可访问；在备份清理前校验差分 JSON，

@@ -1,0 +1,50 @@
+本仓库（rollpig-resources）包含多个类别的内容，分别适用不同的授权条款，
+并非单一协议覆盖全部内容。请根据你要使用的具体内容查阅对应部分。
+
+================================================================================
+一、代码（tools/、deploy/ 目录下的构建、校验、部署脚本等）
+================================================================================
+
+MIT License
+
+Copyright (c) 2026 Felis / Felis2026
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+================================================================================
+二、Felis / Felis2026 原创的图片、文案及其他资源内容
+================================================================================
+
+不适用上述 MIT License。这部分内容适用《RollPig Resources License v1.0》，
+完整条款见本仓库 RESOURCES-LICENSE.md，其核心限制包括禁止未经许可批量镜像
+或重新托管、要求分发时随附署名、禁止直接商业变现等，与 MIT 的授权范围不同，
+请勿假定这部分内容可比照 MIT 自由使用。
+
+================================================================================
+三、第三方来源内容
+================================================================================
+
+来源于 Bearlele/nonebot-plugin-rollpig、PigHub 及社区投稿的内容，其权利归
+各自权利人所有，不受上述两部分条款约束，也不因收录于本仓库而获得额外授权。
+具体来源、原始协议及再分发要求见本仓库 THIRD_PARTY_NOTICES.md。
+
+================================================================================
+
+如果你不确定自己想使用的具体内容属于以上哪一类，请先查阅 README.md 中的
+资源来源说明，或直接联系 Felis2026 确认。

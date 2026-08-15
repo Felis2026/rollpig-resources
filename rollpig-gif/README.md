@@ -1,6 +1,6 @@
-# RollPig GIF Overlay
+# RollPig GIF小猪 Overlay
 
-这个目录是 RollPig Plus 固定加载的官方 GIF 动态小猪 Overlay。
+这个目录是 RollPig Plus 固定加载的 GIF小猪 Overlay。
 
 > RollPig Plus `0.8.2+` 会自动加载该包，用户不需要在私有资源配置中重复添加。
 
@@ -12,7 +12,7 @@
 
 ## 兼容性
 
-该包需要配合支持 GIF 资源的 RollPig Plus 使用；上游原版不会自动加载该 Overlay。
+该包需要配合支持 GIF小猪 Overlay 的 RollPig Plus 使用；上游原版不会自动加载该 Overlay。
 
 ## 资源入口
 

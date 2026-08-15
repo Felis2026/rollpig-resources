@@ -67,6 +67,13 @@ jobs:
           fi
           python tools/check_resources.py "${args[@]}"
 
+      - name: Generate resource stats
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/generate_resource_stats.py \
+            --output "$RUNNER_TEMP/rollpig-resource-stats.json"
+
   deploy:
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     needs: validate
@@ -106,6 +113,13 @@ jobs:
         if: steps.revision.outputs.current == 'true'
         with:
           python-version: "3.11"
+
+      - name: Generate resource stats
+        if: steps.revision.outputs.current == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/generate_resource_stats.py --output stats.json
 
       - name: Validate deployment settings
         if: steps.revision.outputs.current == 'true'
@@ -152,7 +166,7 @@ jobs:
         run: |
           set -euo pipefail
           archive_path="$RUNNER_TEMP/rollpig-resources-${GITHUB_SHA}.tar.gz"
-          tar -czf "$archive_path" rollpig rollpig-gif rollpig-pjsk rollpig-roasts
+          tar -czf "$archive_path" stats.json rollpig rollpig-gif rollpig-pjsk rollpig-roasts
           archive_sha256=$(sha256sum "$archive_path" | awk '{print $1}')
           {
             echo "ARCHIVE_PATH=$archive_path"
@@ -202,6 +216,13 @@ jobs:
               -o "$downloaded_manifest"
             cmp "$package/manifest.json" "$downloaded_manifest"
           done
+
+          downloaded_stats="$RUNNER_TEMP/rollpig-resource-stats-public.json"
+          curl --fail --silent --show-error --location \
+            --max-time 20 --retry 5 --retry-delay 3 \
+            "$DEPLOY_PUBLIC_BASE_URL/stats.json?revision=$GITHUB_SHA" \
+            -o "$downloaded_stats"
+          cmp stats.json "$downloaded_stats"
 
           checks_file="$RUNNER_TEMP/ex-variant-checks.tsv"
           python - <<'PY' > "$checks_file"

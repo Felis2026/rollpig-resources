@@ -448,9 +448,10 @@ def _validate_manifest_header(
         reporter.error(path, "resource_version 必须是非空字符串")
         version = ""
 
-    min_plugin_version = manifest.get("min_plugin_version")
-    if not isinstance(min_plugin_version, str) or not min_plugin_version.strip():
-        reporter.error(path, "min_plugin_version 必须是非空字符串")
+    if "min_plugin_version" in manifest:
+        min_plugin_version = manifest.get("min_plugin_version")
+        if not isinstance(min_plugin_version, str) or not min_plugin_version.strip():
+            reporter.error(path, "min_plugin_version 若声明则必须是非空字符串")
 
     created_at = manifest.get("created_at")
     if not isinstance(created_at, str) or not created_at.strip():
@@ -676,9 +677,10 @@ def _validate_roast_manifest_header(
         reporter.error(path, "resource_version 必须使用 roasts-YYYY-MM-DD.N 格式")
         version = ""
 
-    min_plugin_version = manifest.get("min_plugin_version")
-    if not isinstance(min_plugin_version, str) or not min_plugin_version.strip():
-        reporter.error(path, "min_plugin_version 必须是非空字符串")
+    if "min_plugin_version" in manifest:
+        min_plugin_version = manifest.get("min_plugin_version")
+        if not isinstance(min_plugin_version, str) or not min_plugin_version.strip():
+            reporter.error(path, "min_plugin_version 若声明则必须是非空字符串")
 
     created_at = manifest.get("created_at")
     if not isinstance(created_at, str) or not created_at.strip():
@@ -1225,7 +1227,7 @@ def _validate_roast_history(
 
 
 def _parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Validate all official RollPig resource packs")
+    parser = argparse.ArgumentParser(description="Validate all RollPig resource packs")
     parser.add_argument(
         "--repo-root",
         default=str(Path(__file__).resolve().parents[1]),
