@@ -42,6 +42,32 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Resolve comparison base
+        shell: bash
+        run: |
+          set -euo pipefail
+          candidate="$BASE_REVISION"
+
+          # amend 或强推后，push.before 可能不在 checkout 获取到的分支历史中。
+          # 优先补取该提交；仍不可用时退回当前提交的父提交，避免无效 SHA 让整条流水线中断。
+          if [[ -n "$candidate" && ! "$candidate" =~ ^0+$ ]]; then
+            if ! git cat-file -e "$candidate^{commit}" 2>/dev/null; then
+              git fetch --no-tags --depth=1 origin "$candidate" || true
+            fi
+            if ! git cat-file -e "$candidate^{commit}" 2>/dev/null \
+              || ! git merge-base "$candidate" HEAD >/dev/null 2>&1; then
+              candidate=""
+            fi
+          else
+            candidate=""
+          fi
+
+          if [[ -z "$candidate" ]] && git rev-parse --verify HEAD^ >/dev/null 2>&1; then
+            candidate="HEAD^"
+          fi
+
+          echo "RESOLVED_BASE_REVISION=$candidate" >> "$GITHUB_ENV"
+
       - name: Install image validator
         run: python -m pip install --disable-pip-version-check "Pillow>=12,<13"
 
@@ -51,8 +77,8 @@ jobs:
           set -euo pipefail
           python -m compileall -q tools
           sh -n deploy/apply-github-resource-package.sh
-          if [[ -n "$BASE_REVISION" && ! "$BASE_REVISION" =~ ^0+$ ]]; then
-            git diff --check "$BASE_REVISION"...HEAD
+          if [[ -n "$RESOLVED_BASE_REVISION" ]]; then
+            git diff --check "$RESOLVED_BASE_REVISION"...HEAD
           else
             git diff --check
           fi
@@ -62,8 +88,8 @@ jobs:
         run: |
           set -euo pipefail
           args=()
-          if [[ -n "$BASE_REVISION" && ! "$BASE_REVISION" =~ ^0+$ ]]; then
-            args+=(--base-ref "$BASE_REVISION")
+          if [[ -n "$RESOLVED_BASE_REVISION" ]]; then
+            args+=(--base-ref "$RESOLVED_BASE_REVISION")
           fi
           python tools/check_resources.py "${args[@]}"
 
