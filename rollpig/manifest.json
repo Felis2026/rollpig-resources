@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "resource_version": "2026-08-20.1",
+  "resource_version": "2026-08-31.1",
   "min_plugin_version": "0.2.0",
   "pig_json": {
     "path": "pig.json",
-    "size": 70278,
-    "sha256": "687a491e541869cf1ef4f495e9189cf358a0d68655d1f780395a482113bc8be8"
+    "size": 73086,
+    "sha256": "719fab08a24dd690c844fc89ff185435d9bb63f5841dbba896f617adbea61db4"
   },
   "images": [
     {
@@ -1400,6 +1400,62 @@
       "path": "images/screenshot-pig.png",
       "size": 35441,
       "sha256": "140ff6bcc42ff27fc330fa33f1b717f831face16de73b69c37077d4368b86ace"
+    },
+    {
+      "id": "drama-pig",
+      "filename": "drama-pig.png",
+      "path": "images/drama-pig.png",
+      "size": 48174,
+      "sha256": "ced2af76a5d8b2761d1c6729740bf359f9f735e2b58bba7e2f825b7bd636b476"
+    },
+    {
+      "id": "bankrupt-pig",
+      "filename": "bankrupt-pig.png",
+      "path": "images/bankrupt-pig.png",
+      "size": 73156,
+      "sha256": "011a18ee029e0cb352a92db9255ebd1fbc0dcbb7ff8913039d22989c53f4e48c"
+    },
+    {
+      "id": "grape-pig",
+      "filename": "grape-pig.png",
+      "path": "images/grape-pig.png",
+      "size": 59197,
+      "sha256": "f1eccb5a83e059debdffe55d6e3dca8d76de768679114528ef401e22fef1a205"
+    },
+    {
+      "id": "well-pig",
+      "filename": "well-pig.png",
+      "path": "images/well-pig.png",
+      "size": 52382,
+      "sha256": "28653ca3747c29589d20c0e684cd19abc9faac5208fce5b79b3d75346a403a4f"
+    },
+    {
+      "id": "bully-pig",
+      "filename": "bully-pig.png",
+      "path": "images/bully-pig.png",
+      "size": 47319,
+      "sha256": "cc0025e3e5e881cc905a0401965cf8d8691f58f937bc7616606b8f82aef3125b"
+    },
+    {
+      "id": "flying-pig",
+      "filename": "flying-pig.png",
+      "path": "images/flying-pig.png",
+      "size": 66266,
+      "sha256": "318d5a6ad96623bffaffd2825c1653b879fcdb94eda75a461f989e4f9a611382"
+    },
+    {
+      "id": "hungry-pig",
+      "filename": "hungry-pig.png",
+      "path": "images/hungry-pig.png",
+      "size": 57370,
+      "sha256": "aeb7fb78acad822f3ea3fe87a7d7521a0671f026942c44daa03009c2f71913ea"
+    },
+    {
+      "id": "electric-pig",
+      "filename": "electric-pig.png",
+      "path": "images/electric-pig.png",
+      "size": 54004,
+      "sha256": "9fcc4e6fe783d43527d69fb29090293f1eafc6126c17406be36538648642cb84"
     }
   ],
   "optional_files": {
@@ -1414,7 +1470,7 @@
       "sha256": "11aa1c3a5a2d7fb62ae2bab41640010003ca251559cdf0dd019ca6a6f28a4847"
     }
   },
-  "created_at": "2026-08-10T15:35:54.209268+00:00",
+  "created_at": "2026-08-27T02:44:04.624147+00:00",
   "variant_images": [
     {
       "pig_id": "mechanical-pig",
