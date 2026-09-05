@@ -12,7 +12,9 @@
 
 ## 兼容性
 
-该包需要配合支持 GIF小猪 Overlay 的 RollPig Plus 使用；上游原版不会自动加载该 Overlay。
+- **RollPig Plus**：`0.8.2+` 默认自动加载该 Overlay，无需手动配置。
+- **RollPig 原版**：现已支持在 `ROLLPIG_PRIVATE_RESOURCE_MANIFESTS` 中配置本包 `manifest.json` 按需加载。
+- **其它客户端**：需自行实现 Overlay 同步与 GIF 卡片渲染。
 
 ## 资源入口
 
