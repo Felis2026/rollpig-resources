@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "resource_version": "2026-08-31.1",
+  "resource_version": "2026-09-10.1",
   "min_plugin_version": "0.2.0",
   "pig_json": {
     "path": "pig.json",
@@ -1466,11 +1466,11 @@
     },
     "pig_ex_variants": {
       "path": "pig_ex_variants.json",
-      "size": 7235,
-      "sha256": "11aa1c3a5a2d7fb62ae2bab41640010003ca251559cdf0dd019ca6a6f28a4847"
+      "size": 14235,
+      "sha256": "b422dd1d9ae10fa822b6bae65b2e6dc5d68feffc02de04ad406e46afb0ffd2a7"
     }
   },
-  "created_at": "2026-08-27T02:44:04.624147+00:00",
+  "created_at": "2026-09-09T15:35:09.214016+00:00",
   "variant_images": [
     {
       "pig_id": "mechanical-pig",
@@ -1535,6 +1535,70 @@
       "path": "images/ninja-pig_ex2.png",
       "size": 71864,
       "sha256": "3f19f371baed4c0254b1ca80e2016ab263f714ff4c7886715e2f4d594e7fbf47"
+    },
+    {
+      "pig_id": "doctor-pig",
+      "level": 2,
+      "filename": "doctor-pig_ex2.png",
+      "path": "images/doctor-pig_ex2.png",
+      "size": 83375,
+      "sha256": "ac550ed57a738422e30a4941370a1710109e81bcf94f2870bf046d4d6ea02039"
+    },
+    {
+      "pig_id": "shop-pig",
+      "level": 2,
+      "filename": "shop-pig_ex2.png",
+      "path": "images/shop-pig_ex2.png",
+      "size": 86950,
+      "sha256": "177f34d578e091176cc54123615477816dc2034846efca0dc7691a450cccde56"
+    },
+    {
+      "pig_id": "delivery-pig",
+      "level": 2,
+      "filename": "delivery-pig_ex2.png",
+      "path": "images/delivery-pig_ex2.png",
+      "size": 98862,
+      "sha256": "ccf0ea26ad45f24de04ccfe871c1ee82847ec4b6c121e26d57792fb31aa5cf8e"
+    },
+    {
+      "pig_id": "streamer-pig",
+      "level": 2,
+      "filename": "streamer-pig_ex2.png",
+      "path": "images/streamer-pig_ex2.png",
+      "size": 83593,
+      "sha256": "6c6e9bb3be7affdc9737ce7b2d3c232d85df5419f25b49c087053772c4cbe017"
+    },
+    {
+      "pig_id": "curator-pig",
+      "level": 2,
+      "filename": "curator-pig_ex2.png",
+      "path": "images/curator-pig_ex2.png",
+      "size": 92754,
+      "sha256": "35a7d536c4c6adead773ffc9fe837b15ea4f99d2d43ad45ccf3ef8f4b7251614"
+    },
+    {
+      "pig_id": "laborer-pig",
+      "level": 2,
+      "filename": "laborer-pig_ex2.png",
+      "path": "images/laborer-pig_ex2.png",
+      "size": 88744,
+      "sha256": "23d3623e9cac4a48372050792e1593e07998e101e22d896f5dc0d3454cc17d32"
+    },
+    {
+      "pig_id": "chef-pig",
+      "level": 2,
+      "filename": "chef-pig_ex2.png",
+      "path": "images/chef-pig_ex2.png",
+      "size": 80236,
+      "sha256": "c1eaf2358dd243ac18bc8024198b10c8237f716bfbc51913d31e29d4ecadcbaf"
+    },
+    {
+      "pig_id": "muscle-pig",
+      "level": 2,
+      "filename": "muscle-pig_ex2.png",
+      "path": "images/muscle-pig_ex2.png",
+      "size": 82260,
+      "sha256": "d17258ee993e5f27fda8235d4e302345998af3b5e60076c61f677c42fe04b962"
     }
   ]
 }
