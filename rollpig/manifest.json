@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "resource_version": "2026-09-10.1",
+  "resource_version": "2026-09-15.1",
   "min_plugin_version": "0.2.0",
   "pig_json": {
     "path": "pig.json",
-    "size": 73086,
-    "sha256": "719fab08a24dd690c844fc89ff185435d9bb63f5841dbba896f617adbea61db4"
+    "size": 76645,
+    "sha256": "e96ac171d9350303e4e75fa9831148c8fc090ba830a80a22241ed9dfa33040fd"
   },
   "images": [
     {
@@ -1456,6 +1456,62 @@
       "path": "images/electric-pig.png",
       "size": 54004,
       "sha256": "9fcc4e6fe783d43527d69fb29090293f1eafc6126c17406be36538648642cb84"
+    },
+    {
+      "id": "disco-dancer-pig",
+      "filename": "disco-dancer-pig.png",
+      "path": "images/disco-dancer-pig.png",
+      "size": 49465,
+      "sha256": "7823f5eb1244288f3cd41c3feecae84834fa92ceaf8405282fb4d885908d2f79"
+    },
+    {
+      "id": "detective-pig",
+      "filename": "detective-pig.png",
+      "path": "images/detective-pig.png",
+      "size": 62417,
+      "sha256": "4b1c97b46d9c0bdee0b4312b74cbd69cda223c815c6b05e5e0acab538aa71adf"
+    },
+    {
+      "id": "dj-pig",
+      "filename": "dj-pig.png",
+      "path": "images/dj-pig.png",
+      "size": 59725,
+      "sha256": "0749f02c3d68525f466dfc8d47640b6c67e331a0380de383bb79e938cf9082b2"
+    },
+    {
+      "id": "gardener-pig",
+      "filename": "gardener-pig.png",
+      "path": "images/gardener-pig.png",
+      "size": 56363,
+      "sha256": "77b9502c18cb4ab59e2ebd39a42158fad4f80182baf64c8f514781b251fc6427"
+    },
+    {
+      "id": "painter-pig",
+      "filename": "painter-pig.png",
+      "path": "images/painter-pig.png",
+      "size": 47870,
+      "sha256": "96c43a0bf0b868679f03c5109f457d43b73348cd9c00cf40fae0618f80630db1"
+    },
+    {
+      "id": "pilot-pig",
+      "filename": "pilot-pig.png",
+      "path": "images/pilot-pig.png",
+      "size": 63552,
+      "sha256": "8210d49e93de397237960a4a9fa78be56fce8e94729aebb2ee65e72a480e0014"
+    },
+    {
+      "id": "raver-pig",
+      "filename": "raver-pig.png",
+      "path": "images/raver-pig.png",
+      "size": 49465,
+      "sha256": "fb22d63f55116e72f53861e018b0cdfd86b69d8c6585d1ce3b33d1e1e5998b2c"
+    },
+    {
+      "id": "samba-pig",
+      "filename": "samba-pig.png",
+      "path": "images/samba-pig.png",
+      "size": 54861,
+      "sha256": "dde222a74dbc2ad46b6db8e09d680d8d0123e49cf5c675d440439c15b8566fb8"
     }
   ],
   "optional_files": {
@@ -1470,7 +1526,7 @@
       "sha256": "b422dd1d9ae10fa822b6bae65b2e6dc5d68feffc02de04ad406e46afb0ffd2a7"
     }
   },
-  "created_at": "2026-09-09T15:35:09.214016+00:00",
+  "created_at": "2026-09-15T04:09:10.860430+00:00",
   "variant_images": [
     {
       "pig_id": "mechanical-pig",
