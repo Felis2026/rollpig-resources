@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "resource_version": "2026-09-15.1",
+  "resource_version": "2026-09-20.1",
   "min_plugin_version": "0.2.0",
   "pig_json": {
     "path": "pig.json",
@@ -1522,11 +1522,11 @@
     },
     "pig_ex_variants": {
       "path": "pig_ex_variants.json",
-      "size": 14235,
-      "sha256": "b422dd1d9ae10fa822b6bae65b2e6dc5d68feffc02de04ad406e46afb0ffd2a7"
+      "size": 21110,
+      "sha256": "bcf7180388f95f7da09b1cb5ffe3a63731a1388a1ba547fe6c520096471dae7f"
     }
   },
-  "created_at": "2026-09-15T04:09:10.860430+00:00",
+  "created_at": "2026-09-19T15:40:34.157718+00:00",
   "variant_images": [
     {
       "pig_id": "mechanical-pig",
@@ -1655,6 +1655,70 @@
       "path": "images/muscle-pig_ex2.png",
       "size": 82260,
       "sha256": "d17258ee993e5f27fda8235d4e302345998af3b5e60076c61f677c42fe04b962"
+    },
+    {
+      "pig_id": "early-class-pig",
+      "level": 2,
+      "filename": "early-class-pig_ex2.png",
+      "path": "images/early-class-pig_ex2.png",
+      "size": 84644,
+      "sha256": "d70055613ee9196859aef3433f412138e27286424ba4dbfdc88b3b4007eae7d2"
+    },
+    {
+      "pig_id": "error-404-pig",
+      "level": 2,
+      "filename": "error-404-pig_ex2.png",
+      "path": "images/error-404-pig_ex2.png",
+      "size": 76087,
+      "sha256": "904382e7cc2ec7a1ebe63217fcb330adb044b4ec8dcedc804e52ac9f4cbdad3a"
+    },
+    {
+      "pig_id": "emoji-king-pig",
+      "level": 2,
+      "filename": "emoji-king-pig_ex2.png",
+      "path": "images/emoji-king-pig_ex2.png",
+      "size": 85741,
+      "sha256": "cb42a1c81052c08f5a71ee19beb21b937018e2b6e469658d1173c7f50fc0eaec"
+    },
+    {
+      "pig_id": "teammate-pig",
+      "level": 2,
+      "filename": "teammate-pig_ex2.png",
+      "path": "images/teammate-pig_ex2.png",
+      "size": 76734,
+      "sha256": "cb2c7e27f05a391add13c20a82e2e56670ec04faf289ba57ec4ede7e13a2f1f5"
+    },
+    {
+      "pig_id": "pig-die",
+      "level": 2,
+      "filename": "pig-die_ex2.png",
+      "path": "images/pig-die_ex2.png",
+      "size": 76435,
+      "sha256": "343b17f24c1649cbcc9c205479bd16e0ed98f0d2919c5642f00c652c6ffc8754"
+    },
+    {
+      "pig_id": "chat-spam-pig",
+      "level": 2,
+      "filename": "chat-spam-pig_ex2.png",
+      "path": "images/chat-spam-pig_ex2.png",
+      "size": 68320,
+      "sha256": "6a6a89c5c450cbbc101fe302eee9b477b8e693768f20cd9614c66623c18eb072"
+    },
+    {
+      "pig_id": "bone-soup-pig",
+      "level": 2,
+      "filename": "bone-soup-pig_ex2.png",
+      "path": "images/bone-soup-pig_ex2.png",
+      "size": 90802,
+      "sha256": "07007497b81f6aa2dd29217fa14f03ec345c09e1d43d418fb311c8013039e569"
+    },
+    {
+      "pig_id": "detective-pig",
+      "level": 2,
+      "filename": "detective-pig_ex2.png",
+      "path": "images/detective-pig_ex2.png",
+      "size": 80246,
+      "sha256": "2d3a6a602e7fe055161e76aed4caac9be3eda6a70682939439bff984d4c35406"
     }
   ]
 }
