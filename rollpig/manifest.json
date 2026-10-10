@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "resource_version": "2026-09-20.1",
+  "resource_version": "2026-10-10.1",
   "min_plugin_version": "0.2.0",
   "pig_json": {
     "path": "pig.json",
-    "size": 76645,
-    "sha256": "e96ac171d9350303e4e75fa9831148c8fc090ba830a80a22241ed9dfa33040fd"
+    "size": 79869,
+    "sha256": "ce3754687584de9fa1ec647caef7a76698607cfdee32532f494f4b34011a0c92"
   },
   "images": [
     {
@@ -1512,13 +1512,69 @@
       "path": "images/samba-pig.png",
       "size": 54861,
       "sha256": "dde222a74dbc2ad46b6db8e09d680d8d0123e49cf5c675d440439c15b8566fb8"
+    },
+    {
+      "id": "cowboy-pig",
+      "filename": "cowboy-pig.png",
+      "path": "images/cowboy-pig.png",
+      "size": 52610,
+      "sha256": "7e735862c4b6f83b765dea4ef89ab635d46431363d47944d790f60431b4ea68d"
+    },
+    {
+      "id": "cyborg-pig",
+      "filename": "cyborg-pig.png",
+      "path": "images/cyborg-pig.png",
+      "size": 55508,
+      "sha256": "7ca085e0ac5db03bcaeb6fa2e669265c52e3cc57fb1563dd3880f09b05c40fca"
+    },
+    {
+      "id": "gargoyle-pig",
+      "filename": "gargoyle-pig.png",
+      "path": "images/gargoyle-pig.png",
+      "size": 69420,
+      "sha256": "0b3b6032c0c10a25f54424357b60876d1947e91788722136848062f67edda95e"
+    },
+    {
+      "id": "mummy-pig",
+      "filename": "mummy-pig.png",
+      "path": "images/mummy-pig.png",
+      "size": 63111,
+      "sha256": "18a130d950d34a5e54f83b562a9f4dadb731cb4b1ae87e036df2650c4e9b4a21"
+    },
+    {
+      "id": "ronin-pig",
+      "filename": "ronin-pig.png",
+      "path": "images/ronin-pig.png",
+      "size": 64443,
+      "sha256": "7b326c9792834c0a8e36e7140d77275dabf3e9df2ca65cd4a3505957036f6cdb"
+    },
+    {
+      "id": "smuggler-pig",
+      "filename": "smuggler-pig.png",
+      "path": "images/smuggler-pig.png",
+      "size": 53421,
+      "sha256": "624821a1cc362345162079bad5f1c07ab120ffeb88bad3980ca67875141a4c30"
+    },
+    {
+      "id": "pork-roll",
+      "filename": "pork-roll.png",
+      "path": "images/pork-roll.png",
+      "size": 55042,
+      "sha256": "8e9a7d50026849cce8c82e4ca3f461ad43b07c1d461eaeccf14adf624fc70784"
+    },
+    {
+      "id": "ham",
+      "filename": "ham.png",
+      "path": "images/ham.png",
+      "size": 62920,
+      "sha256": "f7c344965fe0e4fcf24a7a9c335111b74f62833abc9598b20c312c16d1fc7d61"
     }
   ],
   "optional_files": {
     "pig_rules": {
       "path": "pig_rules.json",
-      "size": 562,
-      "sha256": "5e3ddbc0d4b3d9da8872aa556138ea8f27624608d07173dac5d605e15ce1060f"
+      "size": 590,
+      "sha256": "f74a442a409bfd3a1f5127ecf51dfbeedf799a7f538d17ae69da49f1fa14aa4d"
     },
     "pig_ex_variants": {
       "path": "pig_ex_variants.json",
@@ -1526,7 +1582,7 @@
       "sha256": "bcf7180388f95f7da09b1cb5ffe3a63731a1388a1ba547fe6c520096471dae7f"
     }
   },
-  "created_at": "2026-09-19T15:40:34.157718+00:00",
+  "created_at": "2026-10-10T13:53:44.844456+00:00",
   "variant_images": [
     {
       "pig_id": "mechanical-pig",
