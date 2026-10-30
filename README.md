@@ -20,32 +20,40 @@
 </p>
 
 📦 RollPig Resources 是 RollPig 系列 Bot 插件的共享素材与数据分发源。
-集中维护 200+ 基础图鉴小猪、EX 等级差分、GIF小猪 Overlay / PJSK 主题小猪扩展包 与 3900+ 条共享烤猪文案。支持协议的客户端无需发版，即可通过远端 CDN 静态清单（Manifest）自动拉取最新资源与热更新。
+集中维护 200+ 基础图鉴小猪、EX 等级差分、GIF小猪 Overlay / PJSK 主题小猪扩展包与 3900+ 条共享烤猪文案。支持资源协议的客户端可通过远端清单（Manifest）获取更新，无需随每次资源更新发布插件新版本；同步方式和扩展支持见下表。
 
 ## 🧭 资源包定位
 
 | 资源包 | 类型 | 使用方 | 更新节奏 | 推荐插件版本 | 是否需要手动配置 |
 | --- | --- | --- | --- | --- | --- |
-| `rollpig/` | 公有基础包 | 所有支持云端同步的 RollPig 插件 | 每月固定更新 | 支持云端同步即可 | 否，默认资源入口 |
+| `rollpig/` | 公有基础包 | 支持本仓库 Manifest 协议的客户端 | 每月固定更新 | 支持公有基础包同步即可 | 取决于客户端，见下表 |
 | `rollpig-gif/` | GIF小猪 Overlay | RollPig Plus（默认）；原版与其它支持 Overlay 的客户端可配置接入 | 不定期更新 | 支持 GIF Overlay 云同步即可 | Plus 不需要，原版及其它实现自行配置 |
-| `rollpig-pjsk/` | PJSK 主题小猪 Overlay | 所有支持云端同步的 RollPig 插件 | 不定期更新 | 支持云端同步即可 | 是，按需追加 |
+| `rollpig-pjsk/` | PJSK 主题小猪 Overlay | RollPig Plus、原版及其它已实现 Overlay 的客户端 | 不定期更新 | 支持 Overlay 同步与合并 | 是，按需追加 |
 | `rollpig-roasts/` | 共享烤猪文案包 | RollPig Plus | 不定期更新 | Plus `0.10.0+` | 否，默认地址可关闭或替换 |
 | 公有基础包 EX 差分 | `rollpig/pig_ex_variants.json` 可选文件 | 支持 EX 等级差分的 RollPig 插件 | 随公有基础包定期更新 | Plus `0.10.0+` | 否，随基础包读取 |
 
 本文中的 Overlay 指在公有基础包之上追加或覆盖内容的叠加资源包。**数据格式兼容不等于客户端已经实现了对应同步能力**：只实现 `pig.json` 和图片读取的客户端可以使用公有基础包内容，但不会自动获得 GIF小猪 Overlay、EX、共享文案或多 Overlay 功能。
 
-## 🧩 平台兼容边界
+## 🧩 兼容客户端
 
-下表区分“能读取基础数据”和“已经实现本仓库协议的同步能力”，不把社区移植项目列入本仓库已验证的适配范围。
+以下客户端均有读取本仓库公有基础包 Manifest 的实现。兼容信息依据 2026-10-28 的公开源码核对，第三方客户端未逐一部署验收。
 
-| 客户端 | 公有基础包数据 | manifest 云端同步 | GIF小猪 / 多 Overlay | EX / 共享文案 | 说明 |
-| --- | --- | --- | --- | --- | --- |
-| NoneBot RollPig 原版 | ✅ | ✅ 公有基础包；带缓存、SHA256、staging 与原子激活 | ✅ 已支持（需在私有包列表中配置） | ❌ | 已合并 PR #12，支持 Pillow GIF 渲染与多私有 Overlay；不包含 EX 差分与共享文案 |
-| NoneBot RollPig Plus | ✅ | ✅ 公有基础包、Overlay 与共享文案 | ✅ 默认内置拉取 GIF，支持多私有 Overlay | ✅ | 本仓库当前完整验证对象；支持 GIF小猪、PJSK、多私有 Overlay、EX 与共享文案 |
-| AstrBot 社区原移植 | ✅ `pig.json` / `image` 数据结构可对接 | ❌ 当前未纳入本仓库的 manifest 同步验证 | ❌ | ❌ | 以 [MegSopern/astrbot_plugin_rollpig](https://github.com/MegSopern/astrbot_plugin_rollpig) 当前实现为准，需由移植方自行适配 |
-| 其它框架或自建客户端 | 视实现而定 | 视实现而定 | 视实现而定 | 视实现而定 | 可参考 [资源协议](docs/resource-protocol.md) 接入公有基础包，不代表已通过本仓库验证 |
+| 客户端 | 框架 | 基础包同步 | 扩展支持 |
+| --- | --- | --- | --- |
+| [RollPig Plus](https://github.com/Felis2026/nonebot-plugin-rollpig-plus) | NoneBot 2 | 默认自动 | GIF 默认加载；PJSK 需配置；支持 EX 与共享文案 |
+| [RollPig 原版](https://github.com/Bearlele/nonebot-plugin-rollpig) | NoneBot 2 | 默认自动 | GIF、PJSK 需配置；不含 EX 与共享文案 |
+| [astrbot_plugin_rollpigs](https://github.com/Zzzzzzouhang/astrbot_plugin_rollpigs) | AstrBot | 默认自动 | 未接入扩展包 |
+| [AstrBot RollPig Plus](https://github.com/robot234/astrbot_plugin_rollpig_plus) | AstrBot | 默认自动 | EX 部分适配，字段继承不完整 |
+| [Yunzai RollPig](https://github.com/LiuYunLingNai/rollpig-plugin) | Yunzai | 主人手动同步 | GIF 包接入不完整；EX 尚未适配当前资源格式 |
+| [AronaBot](https://github.com/feilongproject/AronaBot) | 综合 Bot | 管理员手动同步 | 未接入扩展包 |
 
-因此，README 中的“RollPig 原版可用”默认指公有基础包基础资源；原版如需使用 GIF小猪 Overlay 或多个私有包，可通过 `ROLLPIG_PRIVATE_RESOURCE_MANIFESTS` 自行配置拉取；想使用 EX 等级差分或共享烤猪文案，请使用已完整支持这些特性的 RollPig Plus。
+适配限制：
+
+- **AstrBot RollPig Plus**：EX 只采用最高一档差分，缺少字段时未逐字段向低等级继承。例如 EX5 只有文案时，不能继续沿用 EX2 的差分图片。
+- **Yunzai RollPig**：GIF 同步只下载图片，未把包内新增小猪加入抽取池；EX 解析结构与本仓库的 `pigs → levels` 不一致，也未下载 `variant_images`。
+- **AronaBot**：提供手动同步入口，已有卡片缓存可能继续显示更新前的图片或文案。
+
+NoneBot RollPig 原版可在 `ROLLPIG_PRIVATE_RESOURCE_MANIFESTS` 中配置 GIF 或 PJSK 包；Plus 默认加载 GIF，PJSK 按需配置。资源地址见[发布地址](#-发布地址)，自建客户端可参考[资源协议](docs/resource-protocol.md)和[客户端接入指南](docs/integration-guide.md)。
 
 ## 📁 目录结构
 
@@ -81,7 +89,7 @@ rollpig-resources/
 
 ### 公有基础包：`rollpig/`
 
-`rollpig/` 是每月固定更新、默认发布给插件使用的完整资源包，包含当前可同步的小猪全集。面向一切已经支持云端资源同步的 RollPig 插件；插件即使暂不支持 GIF小猪、EX 或其它扩展，也可以继续同步并使用其中的基础小猪。
+`rollpig/` 是每月固定更新、默认发布给插件使用的完整资源包，包含当前可同步的小猪全集。面向已实现本仓库公有基础包同步协议的客户端；插件即使暂不支持 GIF小猪、EX 或其它扩展，也可以继续同步并使用其中的基础小猪。
 
 当前插件会把远端 `pig.json` 作为完整小猪列表读取，所以这个目录必须维护为**全量包**，不能只放新增资源。今后公有基础包还会定期更新不同 EX Level 的差分图片与文案；支持 EX 等级的插件可参照 [`pig_ex_variants.json`](rollpig/pig_ex_variants.json) 格式接入，暂不支持的插件会忽略，并继续使用基础资源。
 
