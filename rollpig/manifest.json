@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "resource_version": "2026-10-30.1",
+  "resource_version": "2026-11-23.1",
   "min_plugin_version": "0.2.0",
   "pig_json": {
     "path": "pig.json",
-    "size": 79944,
-    "sha256": "4cb6ef4c90c4f6aaecef1f154fb1191791714101aa9b300afb92f961c9bc1c75"
+    "size": 83486,
+    "sha256": "33754dcb96cb87759d8b260c7cd69441a82cafb8d7e4b60b3738d21ac4e3fedc"
   },
   "images": [
     {
@@ -1568,6 +1568,62 @@
       "path": "images/ham.png",
       "size": 62920,
       "sha256": "f7c344965fe0e4fcf24a7a9c335111b74f62833abc9598b20c312c16d1fc7d61"
+    },
+    {
+      "id": "agent-pig",
+      "filename": "agent-pig.png",
+      "path": "images/agent-pig.png",
+      "size": 52809,
+      "sha256": "06218f547e9e6595cc134e6f6b0413d83f99ce37426c531ac9133ad2084f1752"
+    },
+    {
+      "id": "nuclear-pig",
+      "filename": "nuclear-pig.png",
+      "path": "images/nuclear-pig.png",
+      "size": 64669,
+      "sha256": "d95362ecc05e0ddce1bfc89fe68b12bae8995eaa2042b6a5772e8109aa1ec854"
+    },
+    {
+      "id": "scavenger-pig",
+      "filename": "scavenger-pig.png",
+      "path": "images/scavenger-pig.png",
+      "size": 65895,
+      "sha256": "5a78523b9f5c853c2c45ecd56d00144b758dd3a8c6710eff66f55cfae53bf0c2"
+    },
+    {
+      "id": "moon-pig",
+      "filename": "moon-pig.png",
+      "path": "images/moon-pig.png",
+      "size": 49155,
+      "sha256": "c1158cc369119a760424919c50e10a33d6c4640eb5b4eeae4177e1a2a63711b1"
+    },
+    {
+      "id": "sewer-pig",
+      "filename": "sewer-pig.png",
+      "path": "images/sewer-pig.png",
+      "size": 86140,
+      "sha256": "6e0423d5790761f52d4760aba11bf666155638e7288f03713e6f72171daca3db"
+    },
+    {
+      "id": "jester-pig",
+      "filename": "jester-pig.png",
+      "path": "images/jester-pig.png",
+      "size": 44970,
+      "sha256": "677195b205e67f229c2817768c5bd8875878645be17290a39ebe401116050b75"
+    },
+    {
+      "id": "ice-cream-pig",
+      "filename": "ice-cream-pig.png",
+      "path": "images/ice-cream-pig.png",
+      "size": 40359,
+      "sha256": "8c9af5069f43f2c6f2a7259d4b32ecee9223ff0f91418a8d3dfdb33d8c55b90f"
+    },
+    {
+      "id": "hacker-pig",
+      "filename": "hacker-pig.png",
+      "path": "images/hacker-pig.png",
+      "size": 45010,
+      "sha256": "6f2dde32fc78f4c2f7ac7b8707a54ce2de66ac7c8299bf4045f47286a7529092"
     }
   ],
   "optional_files": {
@@ -1582,7 +1638,7 @@
       "sha256": "3d3cce695196c2351811fd2fccf9917922f44d5a9f3e7af570b609a92a6fc368"
     }
   },
-  "created_at": "2026-10-30T05:56:49.776262+00:00",
+  "created_at": "2026-11-23T12:40:51.488544+00:00",
   "variant_images": [
     {
       "pig_id": "mechanical-pig",
